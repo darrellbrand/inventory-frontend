@@ -12,7 +12,7 @@ const Navbar = (props: Props) => {
             width={100}
             height={25}
           />
-        <a href='home'><p className='font-bold my-2'>home</p></a>
+        <a href='inventory'><p className='font-bold my-2'>home</p></a>
         <a href='register'><p className='font-bold my-2'>register</p></a>
         <a href='login'><p className='font-bold my-2'>login</p></a>
       </div>
