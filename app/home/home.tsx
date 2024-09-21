@@ -15,8 +15,8 @@ const HomePage = (props: Props) => {
             priority
           />
           </div>
-          <div className='relative flex place-content-center'>
-          <h2 className='mt-32 font-bold text-6xl'>Inventory Control</h2>
+          <div className='relative flex place-content-start'>
+          <h2 className='mt-16 font-bold text-6xl ml-20'>Archon Inventory Control</h2>
           </div>
           </div>
       );
