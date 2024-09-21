@@ -1,11 +1,11 @@
+'use client'
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./Navbar";
+import { SessionProvider } from "next-auth/react"
 
-export const metadata: Metadata = {
-  title: "Inventory app",
-  description: "inventory demo app",
-};
+
+
 
 export default function RootLayout({
   children,
@@ -14,10 +14,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <Navbar></Navbar>
-        {children}
-      </body>
+        <body>
+        <SessionProvider>
+          <Navbar></Navbar>
+          {children}
+          </SessionProvider>
+        </body>
     </html>
   );
 }

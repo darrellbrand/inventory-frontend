@@ -1,5 +1,8 @@
+
 import React from 'react'
 import Image from 'next/image';
+import SignIn from '@/components/ui/signin-button';
+
 type Props = {}
 
 const Navbar = (props: Props) => {
@@ -16,8 +19,13 @@ const Navbar = (props: Props) => {
         <a href='register'><p className='font-bold my-2'>register</p></a>
         <a href='login'><p className='font-bold my-2'>login</p></a>
         <a href='inventory'><p className='font-bold my-2'>test inventory</p></a>
+        <SignIn>
+        </SignIn>
       </div>
     </nav>
   )
 }
 export default Navbar
+
+
+ 
