@@ -7,8 +7,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [Google],
   callbacks: {
     authorized: async ({ auth }) => {
-      // Logged in users are authenticated, otherwise redirect to login page
-      console.log(auth?.user?.email)
       return !!auth
     },
   }
