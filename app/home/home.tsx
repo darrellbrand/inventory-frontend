@@ -7,7 +7,7 @@ const HomePage = (props: Props) => {
 
   useEffect(() => {
     const getToken = async () => {
-    const tokenResponse =  fetch('http://localhost:3000/api/storeToken', {
+      const tokenResponse = fetch('http://localhost:3000/api/storeToken', {
         credentials: 'include',
         cache: 'no-store',
         method: 'GET',
@@ -17,9 +17,9 @@ const HomePage = (props: Props) => {
       const data = (await tokenResponse).json()
     }
     getToken()
-
-  }
-  ), [];
+    
+  },
+    []);
 
   return (
     <div className='relative' style={{ width: "100vw", height: "70vh" }}>

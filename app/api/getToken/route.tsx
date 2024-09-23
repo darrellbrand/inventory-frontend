@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request : NextRequest) {
     
     console.log('getToken')
-    console.log(request.cookies.getAll())
+  //  console.log(request.cookies.getAll())
     const token = await getToken()
     if (token) {
 

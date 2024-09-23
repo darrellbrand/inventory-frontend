@@ -15,7 +15,7 @@ export async function setToken(data: TokenResponse) {
       name: "token",
       value: data.token,
       httpOnly: true,
-      secure: false,
+      secure: true,
       path: '/',
       domain: 'localhost',
       sameSite: 'none',
@@ -27,7 +27,7 @@ export async function setToken(data: TokenResponse) {
 export async function getToken(): Promise<TokenResponse | void> {
 
     console.log("getTokenAction")
-    console.log(cookies().getAll())
+  //  console.log(cookies().getAll())
     const token = cookies().get('token')
     if(token && token.value){
       return { token : token.value, message : ""} 
