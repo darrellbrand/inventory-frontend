@@ -4,7 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 const protectedRoutes = ['/inventory']
 const publicRoutes = ['/login', '/signup', '/']
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  debug: true,
+  
   providers: [Google],
   callbacks: {
     authorized: async ({ auth }) => {

@@ -1,8 +1,8 @@
 
-
+import { cookies } from "next/headers";
 import Inventory from './inventory';
-import {Note} from './columns'
-
+import { Note } from './columns'
+import { getToken } from '../home/actions'
 export default async function page() {
 
   const notes: Note[] = [
@@ -25,8 +25,8 @@ export default async function page() {
         email: "user3@example.com",
     },
 ];
-  
-  
+
+  //await fetchPosts()
   return (
     <Inventory note={notes}></Inventory>
   )
