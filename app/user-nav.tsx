@@ -29,7 +29,7 @@ export function UserNav() {
                 {session ?
                     (<DropdownMenuItem onClick={() => signOut()}>Sign Out</DropdownMenuItem>)
                     :
-                    (<DropdownMenuItem onClick={() => signIn()}>Sign In</DropdownMenuItem>)
+                    (<DropdownMenuItem onClick={() => signIn('google')}>Sign In</DropdownMenuItem>)
                 }
             </DropdownMenuContent>
         </DropdownMenu>

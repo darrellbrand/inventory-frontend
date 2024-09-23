@@ -4,22 +4,30 @@ import GoogleProvider from "next-auth/providers/google";
 const protectedRoutes = ['/inventory']
 const publicRoutes = ['/login', '/signup', '/']
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  debug: true,
   providers: [Google],
   callbacks: {
     authorized: async ({ auth }) => {
+      console.log('authorized callback' + auth!!)
       return !!auth
     },
+    redirect: async({url, baseUrl}) =>{
+      console.log('redirect callback' + url)
+      return url
+    },
+    async signIn({ user, account, profile, email, credentials }) {
+      console.log('signIn callback' + user.email)
+      return true
+    },
   }
+  
 })
 
-
-providers: [
+ providers: [
   GoogleProvider({
     clientId: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET
   })
+ 
 ]
 
-export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
-}

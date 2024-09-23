@@ -13,17 +13,17 @@ import {
   } from "@/components/ui/dropdown-menu"
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Payment = {
-    id: string
-    amount: number
-    status: "pending" | "processing" | "success" | "failed"
+export type Note = {
+    id: number
+    title: string
+    content: string
     email: string
 }
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Note>[] = [
     {
-        accessorKey: "status",
-        header: "Status",
+        accessorKey: "content",
+        header: "Content",
     },
     {
         accessorKey: "email",
@@ -40,17 +40,14 @@ export const columns: ColumnDef<Payment>[] = [
           },
     },
     {
-        accessorKey: "amount",
-        header: () => <div className="text-right">Amount</div>,
-        cell: ({ row }) => {
-          const amount = parseFloat(row.getValue("amount"))
-          return <div className="text-right font-medium">{amount}</div>
-        },
+        accessorKey: "title",
+        header: "Title"
+        
     },
     {
         id: "actions",
         cell: ({ row }) => {
-          const payment = row.original
+          const note = row.original
      
           return (
             <DropdownMenu>
@@ -63,7 +60,7 @@ export const columns: ColumnDef<Payment>[] = [
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuItem
-                  onClick={() => navigator.clipboard.writeText(payment.id)}
+                  onClick={() => console.log (note.title)}
                 >
                   Copy payment ID
                 </DropdownMenuItem>
