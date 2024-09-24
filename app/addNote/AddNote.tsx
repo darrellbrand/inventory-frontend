@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { getToken } from '../api/getToken'
 import { useRouter } from 'next/navigation'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { Textarea } from "@/components/ui/textarea"
 const formSchema = z.object({
   title: z.string().min(2).max(50),
   content: z.string().min(2).max(50),
@@ -99,7 +100,7 @@ export const AddNote = (props: Props) => {
             <FormItem>
               <FormLabel>Content</FormLabel>
               <FormControl>
-                <Input placeholder="post content" {...field} />
+                <Textarea placeholder="post content" {...field} />
               </FormControl>
               <FormDescription>
                 This is the title of the post.
