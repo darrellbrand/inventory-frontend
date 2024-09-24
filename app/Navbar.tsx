@@ -23,6 +23,7 @@ const Navbar = (props: Props) => {
       {/*  <a href='register'><p className='font-bold my-2'>register</p></a>
         <a href='login'><p className='font-bold my-2'>login</p></a> */}
         <a href='inventory'><p className='font-bold my-2'>test inventory</p></a>
+        <a href='addNote'><p className='font-bold my-2'>add note</p></a>
        <UserNav></UserNav>
       </div>
     </nav>

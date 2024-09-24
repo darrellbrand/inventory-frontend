@@ -6,18 +6,24 @@ type Props = {}
 const HomePage = (props: Props) => {
 
   useEffect(() => {
-    const getToken = async () => {
-      const tokenResponse = fetch('http://localhost:3000/api/storeToken', {
-        credentials: 'include',
-        cache: 'no-store',
-        method: 'GET',
+    const storeToken = async () => {
+      try {
+        const tokenResponse = fetch('http://localhost:3000/api/storeToken', {
+          credentials: 'include',
+          cache: 'no-store',
+          method: 'GET',
 
 
-      });
-      const data = (await tokenResponse).json()
+        });
+        const data = (await tokenResponse).json()
+      }
+      catch (error) {
+        console.error(error)
+      }
     }
-    getToken()
-    
+
+    storeToken()
+
   },
     []);
 

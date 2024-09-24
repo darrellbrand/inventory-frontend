@@ -5,51 +5,41 @@ import { useState } from 'react';
 import { Note, columns } from "./columns"
 import { DataTable } from "./data-table"
 import { TokenResponse } from '../home/actions';
-
+import { getToken } from '../home/actions';
 
 export default function ({ note }: { note: Note[] }) {
 
     const [notedata, setNoteData] = useState<Note[] | null>(null);
 
     useEffect(() => {
-            const getTokenCookie = async ()  => {
-                const response = await fetch('http://localhost:3000/api/getToken', {
-                    credentials: 'include',
-                    cache: 'no-store',
-                    method: 'GET',
-                });
-                const data = await response.json() as TokenResponse;
-                console.log(data.token)
+        const getAllPosts = async () => {
+            try {
+                const data = await getToken()
                 if (data) {
-                    console.log('inventory got token')
-                    console.log(data)
+                    const postResponse = await fetch('http://localhost:8080/api/posts/findAll', {
+                        cache: "no-store",
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${data.token}`
+                        },
+                        credentials: 'include',
+                    });
+                    if (!postResponse.ok) {
+                        console.error('response status', postResponse.status)
+                    }
+                    const ret = await postResponse.json() as Note[]
+                    console.log(ret)
+                    setNoteData(ret)
+                    return ret
                 }
-                else {
-                    console.log('inventory  failed to get token')
+            }
+            catch (error) {
+                console.error(error)
+            }
+        }
+        const notes = getAllPosts()
 
-                }
-                console.log(data)
-                const postResponse = await fetch('http://localhost:8080/api/posts/findAll', {
-                    cache: "no-store",
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${data.token}`
-                    },
-                    credentials: 'include',
-                });
-                if (!postResponse.ok) {
-                    console.error('response status', response.status)
-                }
-                const ret = await postResponse.json() as Note[]
-                console.log(ret)
-                return ret
-            }
-            try{getTokenCookie()}
-            catch(error){
-                console.error('error',error)
-            }
-            
     }, [])
     return (
         <div className="container mx-auto py-10">
