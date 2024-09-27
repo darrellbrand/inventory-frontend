@@ -7,7 +7,7 @@ import { DataTable } from "./data-table"
 import { TokenResponse } from '../home/actions';
 import { getToken } from '../home/actions';
 
-export default function ({ note }: { note: Note[] }) {
+export default function () {
 
     const [notedata, setNoteData] = useState<Note[] | null>(null);
 

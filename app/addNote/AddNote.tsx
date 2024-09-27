@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
-import { getToken } from '../api/getToken'
+import { getToken } from '../home/actions'
 import { useRouter } from 'next/navigation'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { Textarea } from "@/components/ui/textarea"
