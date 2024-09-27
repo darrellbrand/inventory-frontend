@@ -6,10 +6,11 @@ import { Input } from '@/components/ui/input';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
-import { getToken } from '../home/actions'
+import { getToken } from '../../home/actions'
 import { useRouter } from 'next/navigation'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { Textarea } from "@/components/ui/textarea"
+import { Note } from '../../inventory/columns';
 const formSchema = z.object({
   title: z.string().min(2).max(50),
   content: z.string().min(2).max(50),
@@ -19,30 +20,38 @@ const formSchema = z.object({
 export type FormType = z.infer<typeof formSchema>
 
 
-type Props = {}
+type Props = {
+  note : Note
+}
+
+
+
 
 
 export const AddNote = (props: Props) => {
   const router = useRouter()
-
+  const note = props.note
   const form = useForm<FormType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      content: "",
-      email: "",
-      description: "",
+      title: note.title ?? "",
+      content: note.content ?? "",
+      email: note.content ?? "",
+      description: note.description ?? "",
     },
   })
   const savePost = async (data: FormType): Promise<FormType | undefined> => {
     try {
-  
+       note.content = data.content
+       note.title = data.title
+       note.description = data.description
+       note.email = data.email
       const tokenResponse = await getToken()
       if (tokenResponse) {
         const response = await fetch('http://localhost:8080/api/posts/save', {
           method: 'POST',
           cache: "no-store",
-          body: JSON.stringify(data),
+          body: JSON.stringify(note),
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${tokenResponse.token}`

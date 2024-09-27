@@ -1,4 +1,5 @@
 "use client"
+import { useRouter } from 'next/navigation'
 import { MoreHorizontal } from "lucide-react"
 import { ArrowUpDown } from "lucide-react"
 import { ColumnDef } from "@tanstack/react-table"
@@ -14,7 +15,7 @@ import {
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Note = {
-  id: number
+  id: number | null
   title: string
   content: string
   email: string
@@ -23,6 +24,7 @@ export type Note = {
 
 export const columns: ColumnDef<Note>[] = [
   {
+   
     accessorKey: "content",
     header: "Content",
     cell: ({ row }) => {
@@ -104,7 +106,7 @@ export const columns: ColumnDef<Note>[] = [
     id: "actions",
     cell: ({ row }) => {
       const note = row.original
-
+      const router = useRouter()
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -121,9 +123,9 @@ export const columns: ColumnDef<Note>[] = [
               Copy note ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View note</DropdownMenuItem>
+            <DropdownMenuItem onClick={ () => router.push('/viewNote/' + note.id)}>View note</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Edit note</DropdownMenuItem>
+            <DropdownMenuItem onClick={ () => router.push('/addNote/' + note.id)}>Edit note</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
