@@ -1,7 +1,7 @@
 import React from 'react'
 import ViewNote from './ViewNote'
 import { z } from "zod"
-import { getToken } from '../../home/actions'
+import { getToken } from '../../actions/actions'
 import { useRouter } from 'next/router'
 import { Note, columns } from "../../inventory/columns"
 type Props = {}

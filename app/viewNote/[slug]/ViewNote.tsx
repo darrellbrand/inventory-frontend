@@ -4,8 +4,8 @@ import { Note, columns } from "../../inventory/columns"
 const viewNote = ({ params }: { params: { note: Note } }) => {
   const note = params.note
   return (
-    <div className="flex place-content-center my-32">
-    <div className=" w-48 grid gap-4 grid-cols-2">
+    <div className="flex items-center mx-auto justify-center mt-64  max-w-64">
+    <div className="w-full grid gap-4 grid-cols-2">
         <h1>Title</h1>
         <h1>{note.title}</h1>
         <h1>Content</h1>

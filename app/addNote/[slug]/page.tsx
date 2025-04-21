@@ -2,8 +2,8 @@ import React from 'react'
 import { FormType, AddNote } from './AddNote'
 import { FormEvent } from 'react'
 import { useForm, SubmitHandler } from "react-hook-form"
-import { TokenResponse } from '../../home/actions'
-import { getToken } from '../../home/actions'
+import { TokenResponse } from '../../actions/actions'
+import { getToken } from '../../actions/actions'
 import { Note } from '../../inventory/columns';
 type Props = {
   id: string

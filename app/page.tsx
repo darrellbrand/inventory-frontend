@@ -1,7 +1,15 @@
-import Image from "next/image";
-import Navbar from "./Navbar"
-export default function Home() {
+
+import React from 'react'
+import { TokenResponse, setToken } from './actions/actions'
+import HomePage from './home'
+
+type Props = {}
+
+
+const page = async (props: Props) => {
   return (
-    <h5>default page.tsx</h5>
-  )
-}
+    <HomePage></HomePage>
+  );
+};
+
+export default page

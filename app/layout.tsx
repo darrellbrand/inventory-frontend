@@ -1,10 +1,15 @@
-'use client'
+
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./Navbar";
 import { SessionProvider } from "next-auth/react"
 
-
+export const metadata = {
+  title: "Baller Webapp",
+  icons: {
+    icon: "/favicon.ico", // or "/favicon.png" or any other icon file in public/
+  },
+};
 
 
 export default function RootLayout({

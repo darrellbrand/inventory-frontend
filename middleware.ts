@@ -5,7 +5,7 @@ import { cookies } from "next/headers"
 import { NextRequest, NextResponse } from 'next/server';
 export { auth as middleware } from "@/auth"
 import { NextApiRequest, NextApiResponse } from 'next';
-import { setToken, TokenResponse } from './app/home/actions';
+import { setToken, TokenResponse } from './app/actions/actions';
 import { error } from 'console';
 const username = 'dj';
 const password = 'password';

@@ -24,24 +24,6 @@ export type Note = {
 
 export const columns: ColumnDef<Note>[] = [
   {
-   
-    accessorKey: "content",
-    header: "Content",
-    cell: ({ row }) => {
-      const content = row.getValue("content");
-      return (
-        <div style={{
-          whiteSpace: 'nowrap',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          maxWidth: '150px' // Adjust the width as needed
-        }}>
-          {content as string}
-        </div>
-      );
-    }
-  },
-  {
     accessorKey: "email",
     header: ({ column }) => {
       return (
@@ -103,6 +85,24 @@ export const columns: ColumnDef<Note>[] = [
     }
   },
   {
+   
+    accessorKey: "content",
+    header: "Content",
+    cell: ({ row }) => {
+      const content = row.getValue("content");
+      return (
+        <div style={{
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          maxWidth: '150px' // Adjust the width as needed
+        }}>
+          {content as string}
+        </div>
+      );
+    }
+  },
+  {
     id: "actions",
     cell: ({ row }) => {
       const note = row.original
@@ -117,15 +117,15 @@ export const columns: ColumnDef<Note>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={ () => router.push('/viewNote/' + note.id)}>View note</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={ () => router.push('/addNote/' + note.id)}>Edit note</DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => console.log(note.title)}
             >
               Copy note ID
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={ () => router.push('/viewNote/' + note.id)}>View note</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={ () => router.push('/addNote/' + note.id)}>Edit note</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

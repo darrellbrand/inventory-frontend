@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
-import { getToken } from '../../home/actions'
+import { getToken } from '../../actions/actions'
 import { useRouter } from 'next/navigation'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { Textarea } from "@/components/ui/textarea"
@@ -67,10 +67,10 @@ export const AddNote = (props: Props) => {
     }
   }
   return (
-    <div className='  my-6   mx-64  ' >
+    <div className='mt-20 mx-auto max-w-xl  ' >
     <Form {...form}>
       <form onSubmit={form.handleSubmit(savePost)} className="space-y-8">
-      <FormField
+      <FormField 
           control={form.control}
           name="title"
           render={({ field }) => (
