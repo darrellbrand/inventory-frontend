@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { TokenResponse, setToken } from './actions/actions'
+
 import HomePage from './home'
 
 type Props = {}
