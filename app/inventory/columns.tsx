@@ -4,6 +4,9 @@ import { MoreHorizontal } from "lucide-react"
 import { ArrowUpDown } from "lucide-react"
 import { ColumnDef } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
+import { deletePost } from "../actions/actions"
+
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Note = {
@@ -85,7 +89,7 @@ export const columns: ColumnDef<Note>[] = [
     }
   },
   {
-   
+
     accessorKey: "content",
     header: "Content",
     cell: ({ row }) => {
@@ -118,16 +122,20 @@ export const columns: ColumnDef<Note>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={ () => router.push('/viewNote/' + note.id)}>View note</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push('/viewNote/' + note.id)}>View note</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={ () => router.push('/addNote/' + note.id)}>Edit note</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push('/addNote/' + note.id)}>Edit note</DropdownMenuItem>
+            <DropdownMenuItem onClick={async () => {
+              await deletePost(note.id?.toString() || "")}}
+            >Delete note</DropdownMenuItem>
+            <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => console.log(note.title)}
             >
               Copy note ID
             </DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu >
       )
     },
   },

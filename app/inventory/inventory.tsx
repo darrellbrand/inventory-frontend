@@ -7,44 +7,17 @@ import { DataTable } from "./data-table"
 import { TokenResponse } from '../actions/actions';
 import { getToken } from '../actions/actions';
 import { useSession } from "next-auth/react"
-export default function () {
+export type InventoryProps = {
+    notes: Note[] | undefined
+}
+export default function (props: InventoryProps) {
     const { data: session, status } = useSession()
-    const [notedata, setNoteData] = useState<Note[] | null>(null);
-   
+    const [notedata, setNoteData] = useState<Note[] | null | undefined>(props.notes);
     useEffect(() => {
-        const getAllPosts = async () => {
-            try {
-                const data = await getToken()
-                if (data) {
-                    const postResponse = await fetch('http://localhost:8080/api/posts/findAll', {
-                        cache: "no-store",
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${data.token}`
-                        },
-                        credentials: 'include',
-                    });
-                    if (!postResponse.ok) {
-                        console.error('response status', postResponse.status)
-                    }
-                    const ret = await postResponse.json() as Note[]
-                    console.log(ret)
-                    setNoteData(ret)
-                    return ret
-                }
-            }
-            catch (error) {
-                console.error(error)
-            }
-        }
-        const notes = getAllPosts()
-
-    }, [])
-
-   
+        setNoteData(props.notes)
+    }, [props.notes])
+    
     return (
-       
         <div className="container mx-auto max-w-7xl mt-20">
             <DataTable columns={columns} data={notedata ?? []} />
         </div>
