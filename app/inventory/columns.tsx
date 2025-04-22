@@ -125,6 +125,7 @@ export const columns: ColumnDef<Note>[] = [
             <DropdownMenuItem onClick={() => router.push('/viewNote/' + note.id)}>View note</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => router.push('/addNote/' + note.id)}>Edit note</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push('/addNote/' + -1)}>Add note</DropdownMenuItem>
             <DropdownMenuItem onClick={async () => {
               await deletePost(note.id?.toString() || "")}}
             >Delete note</DropdownMenuItem>
