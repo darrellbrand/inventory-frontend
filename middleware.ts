@@ -10,5 +10,5 @@ const password = 'password';
 const authString = btoa(`${username}:${password}`);
  
 export const config = {
-  matcher: ["/inventory", "/((?!api|_next/static|_next/image|favicon.ico|home).*)"],
+  matcher: [ "/((?!api|_next/static|_next/image|favicon.ico|home).*)"],
 }
