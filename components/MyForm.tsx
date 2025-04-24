@@ -9,6 +9,7 @@ export function MyForm() {
     console.log(`${value}`)
     event.preventDefault();
     setIsLoading(true);
+    setValue("")
     socket.timeout(5000).emit('message', value, () => {
       setIsLoading(false);
     });
@@ -16,7 +17,7 @@ export function MyForm() {
 
   return (
     <form onSubmit={ onSubmit }>
-      <input className='text-red-500' onChange={ e => setValue(e.target.value) } />
+      <input value={value} className='text-red-500' onChange={ e => setValue(e.target.value) } />
 
       <button type="submit" disabled={ isLoading }>Submit</button>
     </form>
