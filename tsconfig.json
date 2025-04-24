@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/chat/chat.tsx", "components/MyForm.tsx", "components/Events.tsx", "components/ConnectionState.tsx", "components/ConnectionManager.tsx"],
   "exclude": ["node_modules"]
 }

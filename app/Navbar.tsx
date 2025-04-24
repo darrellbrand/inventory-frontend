@@ -24,6 +24,7 @@ const Navbar = (props: Props) => {
         <a href='login'><p className='font-bold my-2'>login</p></a> */}
         <a href='/inventory'><p className='font-bold my-2'>notes</p></a>
         <a href='/addNote/-1'><p className='font-bold my-2'>add note</p></a>
+        <a href='/chat'><p className='font-bold my-2'>chat</p></a>
        <UserNav></UserNav>
       </div>
     </nav>
