@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { Textarea } from "@/components/ui/textarea"
 import { Note } from '../../inventory/columns';
+import { revalidatePath } from 'next/cache';
 const formSchema = z.object({
   title: z.string().min(2).max(50),
   content: z.string().min(2).max(50),
@@ -59,6 +60,7 @@ export const AddNote = (props: Props) => {
         })
         console.log(data)
         router.push("/inventory")
+        revalidatePath("/inventory","page")
         return await response.json()
       }
     }

@@ -11,6 +11,7 @@ export default function Chat() {
   const [messageEvents, setMessageEvents] = useState<string[]>([]);
 
   useEffect(() => {
+
     function onConnect() {
       console.log(`client connect()`)
       setIsConnected(socket.connected);
@@ -25,6 +26,8 @@ export default function Chat() {
       setMessageEvents(previous => [...previous, value]);
     }
 
+    socket.connect();
+
     socket.on('connect', onConnect);
     socket.on('disconnect', onDisconnect);
     socket.on('message', onMessageEvent);
@@ -33,6 +36,8 @@ export default function Chat() {
       socket.off('connect', onConnect);
       socket.off('disconnect', onDisconnect);
       socket.off('message', onMessageEvent);
+      socket.disconnect();
+
     };
   }, []);
 
