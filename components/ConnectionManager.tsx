@@ -12,8 +12,8 @@ export function ConnectionManager() {
 
   return (
     <div className='flex gap-2 w-full max-w-xl'>
-      <button className=' w-full bg-slate-400 dark:bg-slate-700 rounded-3xl p-10' onClick={connect}>Connect</button>
-      <button className=' w-full bg-slate-400 dark:bg-slate-700 rounded-3xl p-10' onClick={disconnect}>Disconnect</button>
+      <button className=' w-full bg-slate-400 dark:bg-slate-700 rounded-3xl p-1' onClick={connect}>Connect</button>
+      <button className=' w-full bg-slate-400 dark:bg-slate-700 rounded-3xl p-1' onClick={disconnect}>Disconnect</button>
     </div>
   );
 }
