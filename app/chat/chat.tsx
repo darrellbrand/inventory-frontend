@@ -23,6 +23,7 @@ export default function Chat() {
     }
 
     function onMessageEvent(value: string) {
+      console.log(`onMesageEvent` + value)
       setMessageEvents(previous => [...previous, value]);
     }
 
@@ -42,11 +43,13 @@ export default function Chat() {
   }, []);
 
   return (
-    <div className=" flex w-full flex-col items-center mt-40">
-      <ConnectionState isConnected={isConnected} />
-      <Events events={messageEvents} />
-      <ConnectionManager />
-      <MyForm />
+    <div className=' flex flex-col w-screen items-center justify-center  h-screen bg-background pb-5 '>
+      <div className=" flex w-full max-w-xs md:max-w-7xl  h-full flex-col items-center  justify-center gap-1 mt-16">
+        <Events events={messageEvents} />
+        <MyForm />
+        <ConnectionState isConnected={isConnected} />
+        <ConnectionManager />
+      </div>
     </div>
   );
 }

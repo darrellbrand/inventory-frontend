@@ -7,6 +7,7 @@ import { DataTable } from "./data-table"
 import { TokenResponse } from '../actions/actions';
 import { getToken } from '../actions/actions';
 import { useSession } from "next-auth/react"
+import { DivideCircle } from 'lucide-react';
 export type InventoryProps = {
     notes: Note[] | undefined
 }
@@ -16,10 +17,12 @@ export default function (props: InventoryProps) {
     useEffect(() => {
         setNoteData(props.notes)
     }, [props.notes])
-    
+
     return (
-        <div className="container mx-auto max-w-7xl mt-20">
-            <DataTable columns={columns} data={notedata ?? []} />
+        <div className='relative h-full w-screen justify-center items-center flex flex-col bg-background'>
+            <div className='max-w-xs md:max-w-7xl w-full '>
+                <DataTable columns={columns} data={notedata ?? []} />
+            </div>
         </div>
     )
 };

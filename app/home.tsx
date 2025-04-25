@@ -12,14 +12,8 @@ const HomePage = (props: Props) => {
     []);
 
   return (
-    <div className='relative bg-red-50 min-h-screen w-full flex flex-col items-start justify-start'>
-      <Image className='object-cover object-center'
-        src="/clock-7258194_1280.jpg"
-        alt="Banner Image"
-        fill
-        priority
-      />
-      <h2 className='z-10  mt-40 font-bold text-6xl ml-32 '>Archon Inventory Control</h2>
+    <div className='relative min-h-screen  w-screen  flex flex-col items-center justify-center bg-background text-center '>
+      <h2 className='  font-bold text-4xl '>Archon Inventory Control</h2>
     </div>
   );
 }

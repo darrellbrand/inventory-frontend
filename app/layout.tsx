@@ -3,6 +3,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import { SessionProvider } from "next-auth/react"
+import { ThemeProvider } from 'next-themes'
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar"
+
 
 export const metadata = {
   title: "Baller Webapp",
@@ -18,13 +22,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-        <body>
+    <html lang="en" suppressHydrationWarning >
+      <body className="w-screen h-screen"  >
         <SessionProvider>
-          <Navbar></Navbar>
-          {children}
-          </SessionProvider>
-        </body>
+          <SidebarProvider>
+            <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+              <AppSidebar />
+              <Navbar></Navbar>
+              <main className="">
+                {children}
+              </main>
+            </ThemeProvider>
+          </SidebarProvider>
+        </SessionProvider>
+      </body>
     </html>
   );
 }

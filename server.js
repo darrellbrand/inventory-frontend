@@ -20,11 +20,12 @@ app.prepare().then(() => {
 
   io.on("connection", (socket) => {
     console.log('Client connected');
-
     socket.on('message', (data) => {
       console.log('Message received:', data);
+
       // Optionally, emit a response
-      socket.broadcast.emit('message', data);
+
+      io.emit('message', data);
     });
   });
 
