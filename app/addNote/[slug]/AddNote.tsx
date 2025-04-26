@@ -1,12 +1,12 @@
 'use client'
 import React from 'react'
-import { useForm ,SubmitHandler} from "react-hook-form"
+import { useForm, SubmitHandler } from "react-hook-form"
 import { FormItem, FormControl, FormField, FormLabel, FormDescription, FormMessage, Form, } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
-import { getToken } from '../../actions/actions'
+import { fetchToken } from '../../actions/actions'
 import { useRouter } from 'next/navigation'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { Textarea } from "@/components/ui/textarea"
@@ -22,7 +22,7 @@ export type FormType = z.infer<typeof formSchema>
 
 
 type Props = {
-  note : Note
+  note: Note
 }
 
 
@@ -43,11 +43,11 @@ export const AddNote = (props: Props) => {
   })
   const savePost = async (data: FormType): Promise<FormType | undefined> => {
     try {
-       note.content = data.content
-       note.title = data.title
-       note.description = data.description
-       note.email = data.email
-      const tokenResponse = await getToken()
+      note.content = data.content
+      note.title = data.title
+      note.description = data.description
+      note.email = data.email
+      const tokenResponse = await fetchToken()
       if (tokenResponse) {
         const response = await fetch('http://localhost:8080/api/posts/save', {
           method: 'POST',
@@ -60,7 +60,7 @@ export const AddNote = (props: Props) => {
         })
         console.log(data)
         router.push("/inventory")
-        revalidatePath("/inventory","page")
+        revalidatePath("/inventory", "page")
         return await response.json()
       }
     }
@@ -69,76 +69,80 @@ export const AddNote = (props: Props) => {
     }
   }
   return (
-    <div className='mt-20 mx-auto max-w-xl  ' >
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(savePost)} className="space-y-8">
-      <FormField 
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input placeholder="post title" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is the title of the post.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
+    <div className=' relative flex flex-col w-screen min-h-screen  justify-center items-center  overflow-hidden ' >
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(savePost)} className=" w-full max-w-2xl px-2">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input placeholder="post title" {...field} />
+                </FormControl>
+                <FormDescription>
+                  This is the title of the post.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-           <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Input placeholder="Description" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is a description of the post.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Input placeholder="Description" {...field} />
+                </FormControl>
+                <FormDescription>
+                  This is a description of the post.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-           <FormField
-          control={form.control}
-          name="content"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Content</FormLabel>
-              <FormControl>
-                <Textarea placeholder="post content" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is the title of the post.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
+          <FormField
+            control={form.control}
+            name="content"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Content</FormLabel>
+                <FormControl>
+                  <Textarea placeholder="post content" {...field} />
+                </FormControl>
+                <FormDescription>
+                  This is the title of the post.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-           <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="posters email address" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is the posters email.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input placeholder="posters email address" {...field} />
+                </FormControl>
+                <FormDescription>
+                  This is the posters email.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+          <div className='relative flex w-full h-28  flex-col justify-center  items-center'>
+          <Button className="max-w-xs w-full  mt-4" type="submit">Submit</Button>
+          </div>
+        </form>
+
+      </Form>
+
     </div>
   )
 }

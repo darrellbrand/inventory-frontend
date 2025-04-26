@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
-import { fetchToken, getToken } from './actions/actions'
+import { fetchToken } from './actions/actions'
 type Props = {}
 
 const HomePage = (props: Props) => {
