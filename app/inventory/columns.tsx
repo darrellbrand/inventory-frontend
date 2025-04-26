@@ -4,7 +4,7 @@ import { MoreHorizontal } from "lucide-react"
 import { ArrowUpDown } from "lucide-react"
 import { ColumnDef } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
-import { deletePostAction } from "../actions/actions"
+import { deletePost } from "../actions/actions"
 
 
 import {
@@ -127,7 +127,7 @@ export const columns: ColumnDef<Note>[] = [
             <DropdownMenuItem onClick={() => router.push('/addNote/' + note.id)}>Edit note</DropdownMenuItem>
             <DropdownMenuItem onClick={() => router.push('/addNote/' + -1)}>Add note</DropdownMenuItem>
             <DropdownMenuItem onClick={async () => {
-              deletePostAction
+              deletePost
             }}
             >Delete note</DropdownMenuItem>
             <DropdownMenuSeparator />

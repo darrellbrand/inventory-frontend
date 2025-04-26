@@ -3,14 +3,14 @@ import { auth } from "@/auth"
 
 
 import { getToken, writeToken } from "./app/actions/actions";
-export { auth as middleware } from "@/auth"
+
 
 const username = 'dj';
 const password = 'password';
 const authString = btoa(`${username}:${password}`);
 export default auth((req) => {
-  
-    const token =  getToken()
+  console.log("MIDDLEWARE")
+     return  writeToken(req)
   
 })
 export const config = {

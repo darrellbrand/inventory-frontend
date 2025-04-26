@@ -4,6 +4,7 @@ import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { jwtDecode } from "jwt-decode";
 import { Note } from '../inventory/columns';
+import { NextRequest, NextResponse } from 'next/server';
 export interface TokenResponse {
   token: string
   refreshToken: string
@@ -132,11 +133,12 @@ export const getToken = async (): Promise<TokenResponse | null> => {
 }
 
 
-export const writeToken = async (): Promise<void> => {
+export const writeToken = async (req: NextRequest): Promise<NextResponse> => {
   const data = await getToken()
+  const response = NextResponse.next();
   if (data) {
     console.log('writeToken')
-    cookies().set({
+    response.cookies.set({
       name: 'token',
       value: data.token,
       httpOnly: true,
@@ -149,4 +151,5 @@ export const writeToken = async (): Promise<void> => {
   else {
     console.log('cant write cookie couldnt getTOken()')
   }
+  return response;
 }
