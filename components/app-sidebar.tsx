@@ -17,27 +17,17 @@ import Navbar from "./Navbar"
 const items = [
     {
         title: "Home",
-        url: "#",
+        url: "/",
         icon: Home,
     },
     {
-        title: "Inbox",
-        url: "#",
+        title: "notes",
+        url: "/inventory",
         icon: Inbox,
     },
     {
-        title: "Calendar",
-        url: "#",
-        icon: Calendar,
-    },
-    {
-        title: "Search",
-        url: "#",
-        icon: Search,
-    },
-    {
-        title: "Settings",
-        url: "#",
+        title: "chat",
+        url: "/chat",
         icon: Settings,
     },
 ]
@@ -45,7 +35,7 @@ const items = [
 export function AppSidebar() {
     return (
         <div className="fixed top-0 z-20">
-            <Sidebar collapsible="icon" className=" ">
+            <Sidebar collapsible="icon" className="">
                 <SidebarContent>
                     <SidebarGroup>
                         <SidebarGroupLabel>Application</SidebarGroupLabel>
