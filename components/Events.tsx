@@ -1,39 +1,42 @@
 import React, { useState } from 'react';
-import { ConnectionState } from '../components/ConnectionState';
-import { ConnectionManager } from '../components/ConnectionManager';
+
 type EventsProps = {
     events: { userName: string, text: string }[];
     userList: { username: string }[];
-    isConnected: boolean
 };
 
-export function Events({ events, isConnected, userList }: EventsProps) {
+export function Events({ events, userList }: EventsProps) {
 
     return (
 
 
-        <div className=' relative  text-left  mb-2 max-w-xs md:max-w-full  dark:bg-slate-800  w-full  h-full flex items-center justify-start mx-auto rounded-2xl '>
-            <ul className='px-4 w-full'>
-                {
-                    Array.from(
-                        new Map(userList.map(user => [user.username, user])).values()
-                    ).map((user, index) => (
-                        <li key={index}>{user.username}</li>
-                    ))
-                }
-            </ul>
+        <div className=' relative text-xl text-left  mb-2  h-[700px]  bg-slate-200 dark:bg-slate-600 w-full  flex  rounded-2xl overflow-hidden p-5 '>
 
-            <ul className='px-4 w-full'>
-                {
-                    events.map((event, index) =>
-                        <li key={index}>{event.userName} : {event.text}</li>
-                    )
-                }
-            </ul>
+            <div className=" mx-auto flex  flex-col md:flex-row w-full h-full overflow-y-auto overflow-x-hidden gap-3   items-end">
+                <ul className='  text-slate-100 flex-2  px-4 w-1/6  h-full rounded-3xl overflow-x-hidden bg-background p-14'>
+                    <h1 className='text-4xl font-bold dark:text-slate-100 text-slate-800 pb-2'>Connected Users:</h1>
+                    {
+                        Array.from(
+                            new Map(userList.map(user => [user.username, user])).values()
+                        ).map((user, index) => (
+                            <div className=' dark:bg-slate-600 bg-slate-100 border rounded-xl m-1 p-2 flex '>
+                                <li className=' dark:text-slate-100 text-slate-800 w-full  max-w-full break-words whitespace-pre-wrap' key={index}>{user.username}</li>
+                            </div>
+                        ))
+                    }
+                </ul>
 
-            <div className=' absolute top-0 right-0  bg-slate-300 dark:bg-slate-900/30   rounded-xl flex  m-2  px-6 py-4  items-center gap-1 z-10 '>
-                <ConnectionState isConnected={isConnected} />
-                <ConnectionManager />
+                <ul className='mx-auto flex- px-4 w-5/6   h-full rounded-3xl overflow-x-hidden bg-background p-14'>
+                    <h1 className='font-bold text-4xl dark:text-slate-100 text-slate-800  pb-2 rounded-2xl bg-background'>Messages:</h1>
+                    {
+
+                        events.map((event, index) =>
+                            <div className=' dark:bg-slate-600 bg-slate-100 border rounded-xl m-1 p-2 flex '>
+                                <li className='   dark:text-slate-100 text-slate-800 w-full  max-w-full break-words whitespace-pre-wrap' key={index}><strong>{event.userName}</strong> ::  {event.text}</li>
+                            </div>
+                        )
+                    }
+                </ul>
             </div>
         </div>
     );

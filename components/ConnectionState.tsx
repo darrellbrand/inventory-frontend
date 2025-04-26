@@ -8,7 +8,7 @@ export function ConnectionState({ isConnected }: Props) {
 
   return <Button className={`${
     isConnected
-      ? 'bg-green-100  dark:bg-green-500'
-      : 'bg-red-100  dark:bg-red-500'
+      ? 'bg-green-500  dark:bg-green-500'
+      : 'bg-red-500  dark:bg-red-500'
   }`}> <PlugZap></PlugZap>  </Button> 
 }

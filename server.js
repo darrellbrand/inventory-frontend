@@ -19,9 +19,8 @@ app.prepare().then(() => {
   });
 
   io.on("connection", (socket) => {
-
-
     console.log('Client connected');
+    io.emit("users:list", Array.from(users.values()));
     socket.on('message', (data) => {
       console.log('Message received:', data);
       console.log(`[${data.username}]: ${data.text}`);
@@ -33,13 +32,22 @@ app.prepare().then(() => {
     socket.on("user:join", (user) => {
       users.set(socket.id, user); // e.g., { username: "John" }
       console.log("🧍‍♂️ Users:", Array.from(users.values()));
+      console.log("🧍‍♂️ Users: Join LIST");
+      io.emit("users:list", Array.from(users.values()));
     });
 
     // Let client request user list
     socket.on("get:users", () => {
-      socket.emit("users:list", Array.from(users.values()));
+      console.log("🧍‍♂️ Users: getUsers Broadcast LIST");
+      io.emit("users:list", Array.from(users.values()));
     });
 
+    socket.on("disconnect", (user) => {
+      users.delete(socket.id, user); // e.g., { username: "John" }
+      console.log("🧍‍♂️ Users:", Array.from(users.values()));
+      console.log("🧍‍♂️ Users: disconnect Broadcast LIST");
+      io.emit("users:list", Array.from(users.values()))
+    });
   });
 
   httpServer
