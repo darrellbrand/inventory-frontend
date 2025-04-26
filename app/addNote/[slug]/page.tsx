@@ -1,8 +1,6 @@
 import React from 'react'
-import { FormType, AddNote } from './AddNote'
-import { FormEvent } from 'react'
-import { useForm, SubmitHandler } from "react-hook-form"
-import { getPost, fetchToken, } from '../../actions/actions'
+import { AddNote } from './AddNote'
+import { getPost} from '../../actions/actions'
 
 
 type Props = {
@@ -10,12 +8,10 @@ type Props = {
 }
 
 const page = async ({ params }: { params: { slug: string } }) => {
-  const token = await fetchToken()
-
-
+  
   let note
-  if (Number(params.slug) > -1 && token) {
-    note = await getPost(params.slug, token) ?? { title: "", content: "", email: "", id: null, description: "" }
+  if (Number(params.slug) > -1) {
+    note = await getPost(params.slug) ?? { title: "", content: "", email: "", id: null, description: "" }
   }
   else {
     note = { title: "", content: "", email: "", id: null, description: "" }

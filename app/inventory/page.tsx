@@ -1,15 +1,9 @@
 
-import { cookies } from "next/headers";
-import Inventory, { InventoryProps } from './inventory';
-import { Note } from './columns'
-import { getAllPosts, fetchToken,  } from '../actions/actions'
+import Inventory from './inventory';
+import { getAllPosts } from '../actions/actions'
 export default async function page() {
 
-  const token = await fetchToken()
-  const notes = await getAllPosts(token)
- 
-
-  //await fetchPosts()
+  const notes = await getAllPosts()
   return (
     <Inventory notes={notes}  >
     </Inventory>

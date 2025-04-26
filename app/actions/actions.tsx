@@ -22,58 +22,10 @@ const username = 'dj';
 const password = 'password';
 const authString = btoa(`${username}:${password}`);
 
-export async function fetchToken(): Promise<TokenResponse | void> {
-  'use server'
-  console.log('fetch token')
-  const token = cookies().get('token')?.value
-  if (token && !isExpired(token)) {
-    console.log("success got token from cookie")
-    return { token: token, refreshToken: "", message: "" }
-  }
- 
-
-  console.log("fail get token from cookie,  request from server")
-
+export const getPost = async (slug: string): Promise<Note | undefined> => {
   try {
-    const response = await fetch('http://localhost:8080/token', {
-      cache: "no-store",
-      method: 'POST',
-      headers: {
-        'Authorization': `Basic ${authString}`,
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        // Your request body
-      })
-    });
-    if (!response.ok) {
-      console.error('response status', response.status)
-    }
-    
-    const data: TokenResponse = await response.json(); // Ensure to call json()
-    const cookieStore = await cookies()
-    cookies().set({
-      name: "token",
-      value: data.token,
-      httpOnly: true,
-      secure: true,
-      path: '/',
-      domain: 'localhost',
-      sameSite: 'none',
-      maxAge: 60 * 60 * 24,
-    })
-   
-    return data; // Return the parsed response data
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
-
-
-export const getPost = async (slug: string, tokenResponse: TokenResponse | void): Promise<Note | undefined> => {
-  try {
-    console.log('get postss')
+    console.log('getPost')
+    const tokenResponse = await getToken()
     if (tokenResponse) {
       const response = await fetch(`http://localhost:8080/api/posts/getPost?id=${slug}`, {
         method: 'GET',
@@ -92,9 +44,10 @@ export const getPost = async (slug: string, tokenResponse: TokenResponse | void)
   }
 }
 
-export const getAllPosts = async (data: TokenResponse | null) => {
-  'use server'
+export const getAllPosts = async () => {
+
   try {
+    const data = await getToken()
     if (data) {
       const postResponse = await fetch('http://localhost:8080/api/posts/findAll', {
         cache: "no-store",
@@ -119,36 +72,13 @@ export const getAllPosts = async (data: TokenResponse | null) => {
 }
 
 
-export async function deletePostAction(id: string) {
-  console.log('Deleting post:', id)
-  try {
-    const tokenResponse = await fetchToken()
-    if (tokenResponse) {
-      const response = await fetch(`http://localhost:8080/api/posts/deletePost?id=${id}`, {
-        method: 'POST',
-        cache: "no-store",
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${tokenResponse.token}`
-        },
-      })
-      if (!response.ok) {
-        console.error('Delete failed:', response.status)
-      }
-      revalidatePath("/inventory", 'page') // Revalidate after delete
-    }
-  } catch (error) {
-    console.error('Delete error', error)
-  }
-}
-
-
-export const deletePost = async (data: string): Promise<void | undefined> => {
+export const deletePost = async (slug: string): Promise<void | undefined> => {
   try {
     console.log('deletePost')
-    const tokenResponse = data
+    const data = await getToken()
+    const tokenResponse = await getToken()
     if (tokenResponse) {
-      const response = await fetch(`http://localhost:8080/api/posts/deletePost?id=${data}`, {
+      const response = await fetch(`http://localhost:8080/api/posts/deletePost?id=${slug}`, {
         method: 'POST',
         cache: "no-store",
         headers: {
@@ -156,7 +86,7 @@ export const deletePost = async (data: string): Promise<void | undefined> => {
           'Authorization': `Bearer ${tokenResponse}`
         },
       })
-      console.log(data)
+      console.log(tokenResponse)
       revalidatePath("/inventory", 'page')
     }
   }
@@ -165,9 +95,9 @@ export const deletePost = async (data: string): Promise<void | undefined> => {
   }
 }
 
-export async function getTokenAction(): Promise<TokenResponse | null> {
-  'use server'
-  console.log('getTokenAction')
+export const getToken = async (): Promise<TokenResponse | null> => {
+
+  console.log('getToken')
 
   const token = cookies().get('token')?.value
   if (token && !isExpired(token)) {
@@ -194,7 +124,18 @@ export async function getTokenAction(): Promise<TokenResponse | null> {
     }
 
     const data = await response.json() as TokenResponse
-    const cookieStore = await cookies()
+    return data
+  } catch (error) {
+    console.error('Error fetching token:', error)
+    return null
+  }
+}
+
+
+export const writeToken = async (): Promise<void> => {
+  const data = await getToken()
+  if (data) {
+    console.log('writeToken')
     cookies().set({
       name: 'token',
       value: data.token,
@@ -204,12 +145,8 @@ export async function getTokenAction(): Promise<TokenResponse | null> {
       path: '/',
       maxAge: 60 * 60 * 24, // 1 day
     })
-
-    console.log('New token set in cookies')
-
-    return data
-  } catch (error) {
-    console.error('Error fetching token:', error)
-    return null
+  }
+  else {
+    console.log('cant write cookie couldnt getTOken()')
   }
 }

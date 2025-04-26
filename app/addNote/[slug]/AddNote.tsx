@@ -1,17 +1,16 @@
 'use client'
 import React from 'react'
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { FormItem, FormControl, FormField, FormLabel, FormDescription, FormMessage, Form, } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
-import { fetchToken } from '../../actions/actions'
 import { useRouter } from 'next/navigation'
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { Textarea } from "@/components/ui/textarea"
 import { Note } from '../../inventory/columns';
 import { revalidatePath } from 'next/cache';
+import { getToken } from '@/app/actions/actions';
 const formSchema = z.object({
   title: z.string().min(2).max(50),
   content: z.string().min(2).max(50),
@@ -47,7 +46,7 @@ export const AddNote = (props: Props) => {
       note.title = data.title
       note.description = data.description
       note.email = data.email
-      const tokenResponse = await fetchToken()
+      const tokenResponse = await getToken()
       if (tokenResponse) {
         const response = await fetch('http://localhost:8080/api/posts/save', {
           method: 'POST',
