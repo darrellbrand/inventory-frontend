@@ -76,18 +76,17 @@ export const getAllPosts = async () => {
 export const deletePost = async (slug: string): Promise<void | undefined> => {
   try {
     console.log('deletePost')
-    const data = await getToken()
     const tokenResponse = await getToken()
     if (tokenResponse) {
-      const response = await fetch(`http://localhost:8080/api/posts/deletePost?id=${slug}`, {
+      await fetch(`http://localhost:8080/api/posts/deletePost?id=${slug}`, {
         method: 'POST',
         cache: "no-store",
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${tokenResponse}`
+          'Authorization': `Bearer ${tokenResponse.token}`
         },
       })
-      console.log(tokenResponse)
+
       revalidatePath("/inventory", 'page')
     }
   }

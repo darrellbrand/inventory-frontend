@@ -15,6 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { revalidatePath } from 'next/cache'
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -126,8 +127,15 @@ export const columns: ColumnDef<Note>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => router.push('/addNote/' + note.id)}>Edit note</DropdownMenuItem>
             <DropdownMenuItem onClick={() => router.push('/addNote/' + -1)}>Add note</DropdownMenuItem>
-            <DropdownMenuItem onClick={async () => {
-              deletePost
+            <DropdownMenuItem onClick={() => {
+              if (note.id) {
+                console.log("deletePost")
+               deletePost(note.id?.toString() ?? "");
+              }
+              else {
+                console.log("deletePost failed")
+              }
+
             }}
             >Delete note</DropdownMenuItem>
             <DropdownMenuSeparator />
