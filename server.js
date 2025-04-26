@@ -11,7 +11,7 @@ const handler = app.getRequestHandler();
 
 app.prepare().then(() => {
   const httpServer = createServer(handler);
-
+  const users = new Map(); // socketId => userData
   const io = new Server(httpServer, {
     cors: {
       origin: "http://localhost:3000"
@@ -19,14 +19,27 @@ app.prepare().then(() => {
   });
 
   io.on("connection", (socket) => {
+
+
     console.log('Client connected');
     socket.on('message', (data) => {
       console.log('Message received:', data);
-
+      console.log(`[${data.username}]: ${data.text}`);
       // Optionally, emit a response
-
       io.emit('message', data);
     });
+
+    // Store user info (you can modify this as needed)
+    socket.on("user:join", (user) => {
+      users.set(socket.id, user); // e.g., { username: "John" }
+      console.log("🧍‍♂️ Users:", Array.from(users.values()));
+    });
+
+    // Let client request user list
+    socket.on("get:users", () => {
+      socket.emit("users:list", Array.from(users.values()));
+    });
+
   });
 
   httpServer

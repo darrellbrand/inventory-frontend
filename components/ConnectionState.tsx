@@ -1,7 +1,14 @@
 import React from 'react';
+import { PlugZap } from 'lucide-react';
+import { Button } from './ui/button';
 type Props = {
-  isConnected : boolean;
+  isConnected: boolean;
 };
-export function ConnectionState( {isConnected}  : Props) {
-  return <p className=' text-center bg-slate-300 dark:bg-slate-900 rounded-3xl  w-full max-w-xl  p-1 text-l'>State: {isConnected ? 'Connected' : 'Disconnected'}</p>;
+export function ConnectionState({ isConnected }: Props) {
+
+  return <Button className={`${
+    isConnected
+      ? 'bg-green-100  dark:bg-green-500'
+      : 'bg-red-100  dark:bg-red-500'
+  }`}> <PlugZap></PlugZap>  </Button> 
 }
