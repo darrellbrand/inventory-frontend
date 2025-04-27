@@ -76,17 +76,14 @@ export default function Chat() {
   }, [session, status]);
 
   return (
-    <div>
+    <div className=' flex w-screen h-screen overflow-hidden '>
+      <ConnectionManager isConnected={isConnected} />
       <GlowingStarsBackgroundCard className='w-screen h-screen fixed top-0'>
       </GlowingStarsBackgroundCard>
-      <div className=' flex flex-col w-screen items-center justify-center  h-screen  '>
-        <div className=" flex w-full max-w-7xl h-full flex-col items-center  justify-center gap-1   mt-16">
+      <div className=' flex items-center justify-center  w-full h-full  '>
+        <div className=" flex flex-col  w-full max-w-7xl h-full  items-center  justify-center gap-1  ">
           <Events events={messageEvents} userList={userList} />
           <MyForm></MyForm>
-          <div className=' fixed top-0 right-20  bg-slate-300 dark:bg-slate-900/30   rounded-xl flex  m-2  px-6 py-4  items-center gap-1 z-10 '
-          >
-            <ConnectionManager isConnected={isConnected} />
-          </div>
         </div>
       </div>
     </div>

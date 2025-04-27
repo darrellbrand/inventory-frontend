@@ -7,7 +7,7 @@ type Props = {}
 const HomePage = (props: Props) => {
 
   return (
-    <div className='relative min-h-screen  w-screen  flex flex-col items-center justify-center bg-black text-center '>
+    <div className='relative min-h-screen  w-screen  flex flex-col items-center justify-center dark:bg-black bg-slate-white text-center '>
       <VortexDemo></VortexDemo>
     </div>
   );

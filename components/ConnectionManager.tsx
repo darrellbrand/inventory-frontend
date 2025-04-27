@@ -25,7 +25,7 @@ export function ConnectionManager({ isConnected }: Props) {
    
   }
   return (
-    <div className='flex gap-2 w-full justify-center items-center'>
+    <div className='absolute top-[5rem] right-10  md:top-10 flex gap-2  z-20 justify-center items-center'>
       <button className={`${isConnected
         ? 'bg-green-500  dark:bg-green-500'
         : 'bg-red-500  dark:bg-red-500'}` + ' w-full rounded-3xl p-3'} onClick={() => toggleConnection()}><Unplug></Unplug></button>

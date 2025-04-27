@@ -38,7 +38,7 @@ export function AppSidebar() {
             <Sidebar collapsible="icon" className="">
                 <SidebarContent>
                     <SidebarGroup>
-                        <SidebarGroupLabel>Application</SidebarGroupLabel>
+                        <SidebarGroupLabel>Archon Social</SidebarGroupLabel>
                         <SidebarGroupContent>
                             <SidebarTrigger></SidebarTrigger>
                             <SidebarMenu>
