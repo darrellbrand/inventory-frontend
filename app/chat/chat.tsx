@@ -5,9 +5,10 @@ import { socket } from '../../socket';
 import { Events } from "../../components/Events";
 import { MyForm } from '../../components/MyForm';
 import { useSession } from "next-auth/react"
-import { ConnectionState } from '../../components/ConnectionState';
 import { ConnectionManager } from '../../components/ConnectionManager';
 import { GlowingStarsBackgroundCard } from '@/components/ui/glowing-stars';
+
+
 
 export default function Chat() {
   const [isConnected, setIsConnected] = useState(false);
@@ -76,7 +77,7 @@ export default function Chat() {
   }, [session, status]);
 
   return (
-    <div className=' flex w-screen h-screen overflow-hidden '>
+    <div className=' relative flex w-screen h-screen overflow-hidden '>
       <ConnectionManager isConnected={isConnected} />
       <GlowingStarsBackgroundCard className='w-screen h-screen fixed top-0'>
       </GlowingStarsBackgroundCard>
@@ -86,6 +87,7 @@ export default function Chat() {
           <MyForm></MyForm>
         </div>
       </div>
+
     </div>
   );
 }

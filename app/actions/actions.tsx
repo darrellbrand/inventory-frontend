@@ -99,7 +99,7 @@ export const getToken = async (): Promise<TokenResponse | null> => {
 
   console.log('getToken')
 
-  const token = cookies().get('token')?.value
+  const token = (await cookies()).get('token')?.value
   if (token && !isExpired(token)) {
     console.log('Found valid token in cookies')
     return { token, refreshToken: "", message: "" }

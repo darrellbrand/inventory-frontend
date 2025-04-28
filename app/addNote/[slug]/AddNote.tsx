@@ -1,51 +1,86 @@
 'use client'
-import React from 'react'
-import { useForm } from "react-hook-form"
-import { FormItem, FormControl, FormField, FormLabel, FormDescription, FormMessage, Form, } from '@/components/ui/form';
+import React, { useEffect, useState } from 'react'
+import { useForm, Controller, set } from "react-hook-form"
+import { FormItem, FormControl, FormField, FormLabel, FormDescription, FormMessage, Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Textarea } from "@/components/ui/textarea"
 import { Note } from '../../inventory/columns';
-import { revalidatePath } from 'next/cache';
 import { getToken } from '@/app/actions/actions';
+import { FileUploader } from '@/components/FileUpload';
+
+import 'froala-editor/css/froala_editor.pkgd.min.css'; // Editor styles
+import 'froala-editor/css/froala_style.min.css'; // Content styles
+import 'froala-editor/css/plugins/markdown.min.css'; // 
+import dynamic from 'next/dynamic';
+
+const FroalaEditorComponent = dynamic(async () => {
+  const { default: FroalaEditor } = await import("react-froala-wysiwyg");
+  if (typeof window !== 'undefined') {
+    await Promise.all([import('froala-editor/js/froala_editor.pkgd.min.js'),
+    await import('froala-editor/js/plugins/markdown.min.js')
+    ]
+    )
+  }
+  return FroalaEditor;
+}, {
+  loading: () => <p>LOADING!!!</p>,
+  ssr: false,  // Disable SSR for Froala editor to avoid issues with server-side rendering
+});
 const formSchema = z.object({
   title: z.string().min(2).max(50),
-  content: z.string().min(2).max(50),
-  email: z.string().min(2).max(50),
+  content: z.string().min(2).max(5000),
   description: z.string().min(2).max(1000)
 })
 export type FormType = z.infer<typeof formSchema>
-
 
 type Props = {
   note: Note
 }
 
-
-
-
+const options = {
+  toolbarButtons: ['bold', 'italic', 'underline', 'alignRight', 'alignCenter', 'alignLeft', 'outdent', 'indent', 'undo', 'redo', 'clearFormatting', 'markdown', 'selectAll'],
+  pluginsEnabled: ['align', 'charCounter', 'markdown'],
+  charCounterMax: 5000,
+  markDown: true
+}
 
 export const AddNote = (props: Props) => {
   const router = useRouter()
-  const note = props.note
+  const searchParams = useSearchParams();  // To capture query params
+  const slug = searchParams.get('slug');
+  const note = props.note;
+
   const form = useForm<FormType>({
     resolver: zodResolver(formSchema),
+    mode: "onChange", //
     defaultValues: {
-      title: note.title ?? "",
-      content: note.content ?? "",
-      email: note.content ?? "",
-      description: note.description ?? "",
+      title: note?.title || '',
+      content: note?.content || '',  // Ensure the content is initialized
+      description: note?.description || '',
     },
   })
+
+  const [isEditorReady, setEditorReady] = useState(false);
+  const { register, handleSubmit, control, formState: { errors } } = form;
+
+  useEffect(() => {
+    setEditorReady(true)
+
+  }, [])
   const savePost = async (data: FormType): Promise<FormType | undefined> => {
     try {
+      console.log({ data })
+      if (!note) {
+        console.error("Note is null or undefined.");
+        return;  // Optionally return early or handle the case when note is not available
+      }
       note.content = data.content
       note.title = data.title
       note.description = data.description
-      note.email = data.email
       const tokenResponse = await getToken()
       if (tokenResponse) {
         const response = await fetch('http://localhost:8080/api/posts/save', {
@@ -59,7 +94,6 @@ export const AddNote = (props: Props) => {
         })
         console.log(data)
         router.push("/inventory")
-        revalidatePath("/inventory", "page")
         return await response.json()
       }
     }
@@ -67,10 +101,11 @@ export const AddNote = (props: Props) => {
       console.log(error)
     }
   }
+
   return (
-    <div className=' relative flex flex-col w-screen min-h-screen  justify-center items-center  overflow-hidden ' >
+    <div className=' relative flex flex-col w-screen h-screen  justify-center items-center  overflow-x-hidden ' >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(savePost)} className=" w-full max-w-2xl px-2">
+        <form onSubmit={handleSubmit(savePost)} className=" w-full max-w-2xl px-2 mt-32 ">
           <FormField
             control={form.control}
             name="title"
@@ -103,45 +138,34 @@ export const AddNote = (props: Props) => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="content"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Content</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="post content" {...field} />
-                </FormControl>
-                <FormDescription>
-                  This is the title of the post.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="posters email address" {...field} />
-                </FormControl>
-                <FormDescription>
-                  This is the posters email.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className='relative flex w-full h-28  flex-col justify-center  items-center'>
-          <Button className="max-w-xs w-full  mt-4" type="submit">Submit</Button>
+          {isEditorReady && (
+            <FormField
+              name="content"
+              rules={{ required: true }}
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <FormItem className='mt-5'>
+                  <FormLabel>Content</FormLabel>
+                  <div className='froala-wrapper'>
+                    <FroalaEditorComponent
+                      model={field.value}
+                      onModelChange={field.onChange}
+                      config={options}
+                    />
+                  </div>
+                  <FormDescription>
+                    This is rich text editor for your markup content.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>)}></FormField>
+          )}
+          <div className='relative flex w-full  flex-col justify-center  items-center mt-5'>
+            <FileUploader></FileUploader>
+            <Button className="max-w-xs w-full  mt-4" type="submit">Submit</Button>
           </div>
         </form>
-
       </Form>
-
     </div>
   )
 }

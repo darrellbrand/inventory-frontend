@@ -34,9 +34,9 @@ const items = [
 
 export function AppSidebar() {
     return (
-        <div className="fixed top-0 z-20">
+        <div className="fixed z-20">
             <Sidebar collapsible="icon" className="">
-                <SidebarContent>
+                <SidebarContent className="">
                     <SidebarGroup>
                         <SidebarGroupLabel>Archon Social</SidebarGroupLabel>
                         <SidebarGroupContent>

@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -18,9 +22,24 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
-    }
+      "@/*": [
+        "./*"
+      ]
+    },
+    "target": "ES2017"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/chat/chat.tsx", "components/MyForm.tsx", "components/Events.tsx", "components/ConnectionState.tsx", "components/ConnectionManager.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "app/chat/chat.tsx",
+    "components/MyForm.tsx",
+    "components/Events.tsx",
+    "components/ConnectionState.tsx",
+    "components/ConnectionManager.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
