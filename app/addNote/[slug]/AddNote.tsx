@@ -15,7 +15,11 @@ import { FileUploader } from '@/components/FileUpload';
 import 'froala-editor/css/froala_editor.pkgd.min.css'; // Editor styles
 import 'froala-editor/css/froala_style.min.css'; // Content styles
 import 'froala-editor/css/plugins/markdown.min.css'; // 
+import 'froala-editor/css/themes/dark.min.css';
+import 'froala-editor/css/themes/royal.min.css'
+import 'froala-editor/css/themes/gray.min.css'
 import dynamic from 'next/dynamic';
+import { useTheme } from 'next-themes';
 
 const FroalaEditorComponent = dynamic(async () => {
   const { default: FroalaEditor } = await import("react-froala-wysiwyg");
@@ -41,11 +45,12 @@ type Props = {
   note: Note
 }
 
-const options = {
+const options  = {
   toolbarButtons: ['bold', 'italic', 'underline', 'alignRight', 'alignCenter', 'alignLeft', 'outdent', 'indent', 'undo', 'redo', 'clearFormatting', 'markdown', 'selectAll'],
   pluginsEnabled: ['align', 'charCounter', 'markdown'],
   charCounterMax: 5000,
-  markDown: true
+  markDown: true,
+  theme: "dark"
 }
 
 export const AddNote = (props: Props) => {
@@ -63,13 +68,12 @@ export const AddNote = (props: Props) => {
       description: note?.description || '',
     },
   })
-
+  const { theme } = useTheme()
   const [isEditorReady, setEditorReady] = useState(false);
   const { register, handleSubmit, control, formState: { errors } } = form;
 
   useEffect(() => {
     setEditorReady(true)
-
   }, [])
   const savePost = async (data: FormType): Promise<FormType | undefined> => {
     try {
@@ -103,7 +107,7 @@ export const AddNote = (props: Props) => {
   }
 
   return (
-    <div className=' relative flex flex-col w-screen h-screen  justify-center items-center  overflow-x-hidden ' >
+    <div className=' relative flex flex-col w-screen h-screen  justify-center items-center  overflow-x-hidden bg-background ' >
       <Form {...form}>
         <form onSubmit={handleSubmit(savePost)} className=" w-full max-w-2xl px-2 mt-32 ">
           <FormField

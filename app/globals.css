@@ -103,3 +103,15 @@ body {
     }
   }
 }
+.fr-basic {
+  @apply  dark:bg-background  !important
+}
+.fr-markdown-editor {
+  @apply  dark:bg-background dark:text-slate-200  !important
+}
+.fr-second-toolbar {
+  @apply  dark:bg-background !important
+}
+.fr-element {
+  @apply  dark:text-slate-200 bg-background !important
+}
