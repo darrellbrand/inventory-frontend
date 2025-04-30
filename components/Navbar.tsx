@@ -11,7 +11,7 @@ const Navbar = (props: Props) => {
 
   return (
    
-    <div className='fixed top-5 z-10 w-full mx-auto '>
+    <div className='fixed top-5 z-20 w-full mx-auto '>
       <nav className='relative max-w-xs md:max-w-xs mx-auto flex gap-2 bg-background  items-center  border rounded-2xl justify-evenly p-1' >
         <a href='/'><p className='font-bold my-2'>Home</p></a>
         {/*  <a href='register'><p className='font-bold my-2'>register</p></a>

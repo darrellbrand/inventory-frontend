@@ -11,7 +11,7 @@ export function VortexDemo() {
         className="flex items-center flex-col justify-center px-2 md:px-10  w-full h-full absolute top-0"
       >
         <h2 className="text-white text-2xl md:text-6xl font-bold text-center">
-          Archon Social Media Platform
+          RTFM (Read This Fine Manual)
         </h2>
         <p className="text-white text-sm md:text-2xl max-w-xl mt-6 text-center">
           Blogs, images, rich text editing, and real time chat.

@@ -34,14 +34,14 @@ const items = [
 
 export function AppSidebar() {
     return (
-        <div className="fixed z-20">
+        <div className="fixed z-30">
             <Sidebar collapsible="icon" className="">
-                <SidebarContent className="">
+                <SidebarContent className="pt-5 ">
                     <SidebarGroup>
-                        <SidebarGroupLabel>Archon Social</SidebarGroupLabel>
+                        <SidebarGroupLabel>RTFM (Read This Fine Manual)</SidebarGroupLabel>
                         <SidebarGroupContent>
-                            <SidebarTrigger></SidebarTrigger>
                             <SidebarMenu>
+                            <SidebarTrigger className="z-30"></SidebarTrigger>
                                 {items.map((item) => (
                                     <SidebarMenuItem key={item.title}>
                                         <SidebarMenuButton asChild>
