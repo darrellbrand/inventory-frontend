@@ -27,6 +27,7 @@ import 'froala-editor/css/themes/royal.min.css'
 import 'froala-editor/css/themes/gray.min.css'
 import dynamic from 'next/dynamic';
 import { useTheme } from 'next-themes';
+import { useSession } from "next-auth/react"
 
 const FroalaEditorComponent = dynamic(async () => {
   const { default: FroalaEditor } = await import("react-froala-wysiwyg");
@@ -61,6 +62,7 @@ const options = {
 }
 
 export const AddNote = (props: Props) => {
+  const { data: session, status } = useSession()
   const router = useRouter()
   const searchParams = useSearchParams();  // To capture query params
   const slug = searchParams.get('slug');
@@ -153,6 +155,8 @@ export const AddNote = (props: Props) => {
 
 
   const savePost = async (data: FormType): Promise<FormType | undefined> => {
+    
+    
     console.log("savePost")
     try {
       console.log({ data })
@@ -163,6 +167,7 @@ export const AddNote = (props: Props) => {
       }
       note.content = data.content
       note.title = data.title
+      note.email = session?.user?.email ? session.user.email : ""
       note.description = data.description
       if (imageUrl) {
         note.imageUrl = imageUrl
