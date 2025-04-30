@@ -9,9 +9,16 @@ import { Button } from "@/components/ui/button"
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Textarea } from "@/components/ui/textarea"
 import { Note } from '../../inventory/columns';
-import { getToken } from '@/app/actions/actions';
+import { authenticator, getToken} from '@/app/actions/actions';
 import { FileUploader } from '@/components/FileUpload';
-
+import { getUploadAuthParams } from "@imagekit/next/server"
+import {
+  ImageKitAbortError,
+  ImageKitInvalidRequestError,
+  ImageKitServerError,
+  ImageKitUploadNetworkError,
+  upload,
+} from "@imagekit/next";
 import 'froala-editor/css/froala_editor.pkgd.min.css'; // Editor styles
 import 'froala-editor/css/froala_style.min.css'; // Content styles
 import 'froala-editor/css/plugins/markdown.min.css'; // 
@@ -50,7 +57,7 @@ const options  = {
   pluginsEnabled: ['align', 'charCounter', 'markdown'],
   charCounterMax: 5000,
   markDown: true,
-  theme: "dark"
+  theme: "gray"
 }
 
 export const AddNote = (props: Props) => {
@@ -75,6 +82,69 @@ export const AddNote = (props: Props) => {
   useEffect(() => {
     setEditorReady(true)
   }, [])
+
+
+
+
+ const handleUpload = async (files  : File[]) => {
+
+    const abortController = new AbortController();
+    // Access the file input element using the ref
+     
+  
+    // Extract the first file from the file input
+    const file = files[0];
+  
+    // Retrieve authentication parameters for the upload.
+    let authParams;
+    try {
+        authParams = await authenticator();
+    } catch (authError) {
+        console.error("Failed to authenticate for upload:", authError);
+        return;
+    }
+    const { signature, expire, token, publicKey } = authParams;
+    console.log(authParams)
+    // Call the ImageKit SDK upload function with the required parameters and callbacks.
+    try {
+        const uploadResponse = await upload({
+            // Authentication parameters
+            expire,
+            token,
+            signature,
+            publicKey,
+            file,
+            fileName: file.name, // Optionally set a custom file name
+            // Progress callback to update upload progress state
+            onProgress: (event) => {
+                ((event.loaded / event.total) * 100);
+            },
+            // Abort signal to allow cancellation of the upload if needed.
+            abortSignal: abortController.signal,
+        });
+        console.log("Upload response:", uploadResponse);
+    } catch (error) {
+        // Handle specific error types provided by the ImageKit SDK.
+        if (error instanceof ImageKitAbortError) {
+            console.error("Upload aborted:", error.reason);
+        } else if (error instanceof ImageKitInvalidRequestError) {
+            console.error("Invalid request:", error.message);
+        } else if (error instanceof ImageKitUploadNetworkError) {
+            console.error("Network error:", error.message);
+        } else if (error instanceof ImageKitServerError) {
+            console.error("Server error:", error.message);
+        } else {
+            // Handle any other errors that may occur.
+            console.error("Upload error:", error);
+        }
+    }
+  };
+  
+  
+  
+
+
+
   const savePost = async (data: FormType): Promise<FormType | undefined> => {
     try {
       console.log({ data })
@@ -165,7 +235,7 @@ export const AddNote = (props: Props) => {
                 </FormItem>)}></FormField>
           )}
           <div className='relative flex w-full  flex-col justify-center  items-center mt-5'>
-            <FileUploader></FileUploader>
+            <FileUploader onUploadAction={handleUpload}></FileUploader>
             <Button className="max-w-xs w-full  mt-4" type="submit">Submit</Button>
           </div>
         </form>

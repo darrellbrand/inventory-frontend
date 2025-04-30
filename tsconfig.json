@@ -38,7 +38,7 @@
     "components/Events.tsx",
     "components/ConnectionState.tsx",
     "components/ConnectionManager.tsx"
-  ],
+, ".next/static/froala-editor.d.ts"  ],
   "exclude": [
     "node_modules"
   ]
