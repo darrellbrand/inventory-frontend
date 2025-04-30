@@ -14,10 +14,10 @@ const page = async ({ params }: { params: { slug: string } }) => {
   const {slug} = await params;
   let note
   if (Number(slug) > -1) {
-    note = await getPost(slug) ?? { title: "", content: "", email: "", id: null, description: "" }
+    note = await getPost(slug) ?? { title: "", content: "", email: "", id: null, description: "",  imageUrl: "" }
   }
   else {
-    note = { title: "", content: "", email: "", id: null, description: "" }
+    note = { title: "", content: "", email: "", id: null, description: "", imageUrl: "" }
   }
   return (
 <div>

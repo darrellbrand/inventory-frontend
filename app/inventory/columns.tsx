@@ -25,6 +25,7 @@ export type Note = {
   content: string
   email: string
   description: string
+  imageUrl: string
 }
 
 export const columns: ColumnDef<Note>[] = [
@@ -103,6 +104,25 @@ export const columns: ColumnDef<Note>[] = [
           maxWidth: '150px' // Adjust the width as needed
         }}>
           {content as string}
+        </div>
+      );
+    }
+  },
+  {
+
+    accessorKey: "imageUrl",
+    header: "Image",
+    cell: ({ row }) => {
+      const image = row.getValue("imageUrl");
+      return (
+        <div style={{
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          maxWidth: '150px',
+        }} >
+          {image as string}
+          <img src={image as string}></img>
         </div>
       );
     }

@@ -15,8 +15,8 @@ export default function (props: InventoryProps) {
     }, [props.notes])
 
     return (
-        <div className='relative h-full w-screen justify-center items-center flex flex-col bg-background'>
-            <div className='max-w-xs md:max-w-7xl w-full '>
+        <div className='relative h-full  w-full  overflow-x-hidden justify-center items-center flex flex-col bg-background'>
+            <div className='max-w-xs md:max-w-7xl w-full h-full mt-44 '>
                 <DataTable columns={columns} data={notedata ?? []} />
             </div>
         </div>

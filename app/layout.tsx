@@ -23,13 +23,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning >
-      <body className="w-screen h-screen"  >
+      <body>
         <SessionProvider>
           <SidebarProvider>
             <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
               <AppSidebar />
               <Navbar></Navbar>
-              <main className="">
+              <main className="w-screen h-screen">
                 {children}
               </main>
             </ThemeProvider>

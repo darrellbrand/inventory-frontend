@@ -4,12 +4,12 @@ import { useForm, Controller, set } from "react-hook-form"
 import { FormItem, FormControl, FormField, FormLabel, FormDescription, FormMessage, Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
+import { string, z } from "zod"
 import { Button } from "@/components/ui/button"
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Textarea } from "@/components/ui/textarea"
 import { Note } from '../../inventory/columns';
-import { authenticator, getToken} from '@/app/actions/actions';
+import { authenticator, getToken } from '@/app/actions/actions';
 import { FileUploader } from '@/components/FileUpload';
 import { getUploadAuthParams } from "@imagekit/next/server"
 import {
@@ -44,7 +44,7 @@ const FroalaEditorComponent = dynamic(async () => {
 const formSchema = z.object({
   title: z.string().min(2).max(50),
   content: z.string().min(2).max(5000),
-  description: z.string().min(2).max(1000)
+  description: z.string().min(2).max(1000),
 })
 export type FormType = z.infer<typeof formSchema>
 
@@ -52,7 +52,7 @@ type Props = {
   note: Note
 }
 
-const options  = {
+const options = {
   toolbarButtons: ['bold', 'italic', 'underline', 'alignRight', 'alignCenter', 'alignLeft', 'outdent', 'indent', 'undo', 'redo', 'clearFormatting', 'markdown', 'selectAll'],
   pluginsEnabled: ['align', 'charCounter', 'markdown'],
   charCounterMax: 5000,
@@ -77,7 +77,8 @@ export const AddNote = (props: Props) => {
   })
   const { theme } = useTheme()
   const [isEditorReady, setEditorReady] = useState(false);
-  const { register, handleSubmit, control, formState: { errors } } = form;
+  const { handleSubmit, control, formState: { errors } } = form;
+  const [imageFile, setImageFile] = useState<File | Blob | string | null>();
 
   useEffect(() => {
     setEditorReady(true)
@@ -86,68 +87,76 @@ export const AddNote = (props: Props) => {
 
 
 
- const handleUpload = async (files  : File[]) => {
-
-    const abortController = new AbortController();
-    // Access the file input element using the ref
-     
-  
+  const handleUpload = async (files: File[]) => {
     // Extract the first file from the file input
     const file = files[0];
-  
+    setImageFile(file);
     // Retrieve authentication parameters for the upload.
+
+  };
+
+
+  const doImageUpload = async (): Promise<string | undefined> => {
+    const file = imageFile;
+    if (!file) {
+      console.log("no file end function")
+      return;
+    }
     let authParams;
     try {
-        authParams = await authenticator();
+      authParams = await authenticator();
     } catch (authError) {
-        console.error("Failed to authenticate for upload:", authError);
-        return;
+      console.error("Failed to authenticate for upload:", authError);
+      return;
     }
+
+    const abortController = new AbortController();
+
     const { signature, expire, token, publicKey } = authParams;
     console.log(authParams)
     // Call the ImageKit SDK upload function with the required parameters and callbacks.
     try {
-        const uploadResponse = await upload({
-            // Authentication parameters
-            expire,
-            token,
-            signature,
-            publicKey,
-            file,
-            fileName: file.name, // Optionally set a custom file name
-            // Progress callback to update upload progress state
-            onProgress: (event) => {
-                ((event.loaded / event.total) * 100);
-            },
-            // Abort signal to allow cancellation of the upload if needed.
-            abortSignal: abortController.signal,
-        });
-        console.log("Upload response:", uploadResponse);
+      const uploadResponse = await upload({
+        // Authentication parameters
+        expire,
+        token,
+        signature,
+        publicKey,
+        file,
+        fileName: file instanceof File ? file.name : 'uploaded_file',
+        // Progress callback to update upload progress state
+        onProgress: (event) => {
+          console.log((event.loaded / event.total) * 100);
+        },
+        // Abort signal to allow cancellation of the upload if needed.
+        abortSignal: abortController.signal,
+      });
+      console.log("Upload response:", uploadResponse);
+      return uploadResponse.url;
     } catch (error) {
-        // Handle specific error types provided by the ImageKit SDK.
-        if (error instanceof ImageKitAbortError) {
-            console.error("Upload aborted:", error.reason);
-        } else if (error instanceof ImageKitInvalidRequestError) {
-            console.error("Invalid request:", error.message);
-        } else if (error instanceof ImageKitUploadNetworkError) {
-            console.error("Network error:", error.message);
-        } else if (error instanceof ImageKitServerError) {
-            console.error("Server error:", error.message);
-        } else {
-            // Handle any other errors that may occur.
-            console.error("Upload error:", error);
-        }
+      // Handle specific error types provided by the ImageKit SDK.
+      if (error instanceof ImageKitAbortError) {
+        console.error("Upload aborted:", error.reason);
+      } else if (error instanceof ImageKitInvalidRequestError) {
+        console.error("Invalid request:", error.message);
+      } else if (error instanceof ImageKitUploadNetworkError) {
+        console.error("Network error:", error.message);
+      } else if (error instanceof ImageKitServerError) {
+        console.error("Server error:", error.message);
+      } else {
+        // Handle any other errors that may occur.
+        console.error("Upload error:", error);
+      }
     }
-  };
-  
-  
-  
+  }
 
 
 
   const savePost = async (data: FormType): Promise<FormType | undefined> => {
+    console.log("savePost")
     try {
       console.log({ data })
+      const imageUrl = await doImageUpload();
       if (!note) {
         console.error("Note is null or undefined.");
         return;  // Optionally return early or handle the case when note is not available
@@ -155,6 +164,9 @@ export const AddNote = (props: Props) => {
       note.content = data.content
       note.title = data.title
       note.description = data.description
+      if (imageUrl) {
+        note.imageUrl = imageUrl
+      }
       const tokenResponse = await getToken()
       if (tokenResponse) {
         const response = await fetch('http://localhost:8080/api/posts/save', {
