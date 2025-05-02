@@ -2,19 +2,23 @@ import { auth } from "@/auth"
 
 
 
-import {writeToken } from "./app/actions/actions";
+import { writeToken } from "./app/actions/actions";
 import { NextResponse } from "next/server";
 
 export default auth((req) => {
-  console.log("MIDDLEWARE")
+  console.log("MIDDLEWARE" + req.url)
   console.log(req.auth)
   if (req.auth) {
+    console.log("NO REDIRECT")
     writeToken()
     return NextResponse.next();
   } else {
-    return NextResponse.redirect(new URL('/', req.url));
+    console.log("REDIRECT")
+    return NextResponse.redirect(new URL("/", req.url)); // ✅ This is correct
+
+
   }
 })
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|$^$|^/$).*)"],
+  matcher: ["/chat", "/inventory", "/viewNote", "/addNote"],
 }
