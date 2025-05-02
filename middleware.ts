@@ -12,6 +12,7 @@ const authString = btoa(`${username}:${password}`);
 export default auth((req) => {
   console.log("MIDDLEWARE")
   if (req.auth) {
+    
     writeToken()
   } else {
     return NextResponse.redirect(new URL('/', req.url));
