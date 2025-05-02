@@ -28,7 +28,7 @@ export type Note = {
   imageUrl: string
 }
 
-export const columns: ColumnDef<Note>[] = [
+export const getColumns = (email: string): ColumnDef<Note>[] => [
   {
     accessorKey: "email",
     header: ({ column }) => {
@@ -113,16 +113,17 @@ export const columns: ColumnDef<Note>[] = [
     accessorKey: "imageUrl",
     header: "Image",
     cell: ({ row }) => {
-      const image = row.getValue("imageUrl");
+      const image = row.getValue("imageUrl") || undefined;
       return (
         <div style={{
           whiteSpace: 'nowrap',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           maxWidth: '150px',
+
         }} >
           {image as string}
-          <img src={image as string}></img>
+          <img src={image as string} alt="note image"></img>
         </div>
       );
     }
@@ -144,21 +145,24 @@ export const columns: ColumnDef<Note>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => router.push('/viewNote/' + note.id)}>View note</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => router.push('/addNote/' + note.id)}>Edit note</DropdownMenuItem>
             <DropdownMenuItem onClick={() => router.push('/addNote/' + -1)}>Add note</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => {
-              if (note.id) {
-                console.log("deletePost")
-               deletePost(note.id?.toString() ?? "");
-              }
-              else {
-                console.log("deletePost failed")
-              }
+            {note.email === email && (
+              <>
+                <DropdownMenuItem onClick={() => router.push('/addNote/' + note.id)}>Edit note</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => {
+                  if (note.id) {
+                    console.log("deletePost")
+                    deletePost(note.id?.toString() ?? "");
+                  }
+                  else {
+                    console.log("deletePost failed")
+                  }
 
-            }}
-            >Delete note</DropdownMenuItem>
-            <DropdownMenuSeparator />
+                }}
+                >Delete note</DropdownMenuItem>
+              </>
+            )}
+
             <DropdownMenuItem
               onClick={() => console.log(note.title)}
             >

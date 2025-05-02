@@ -30,6 +30,7 @@ import { useTheme } from 'next-themes';
 import { useSession } from "next-auth/react"
 
 const FroalaEditorComponent = dynamic(async () => {
+
   const { default: FroalaEditor } = await import("react-froala-wysiwyg");
   if (typeof window !== 'undefined') {
     await Promise.all([import('froala-editor/js/froala_editor.pkgd.min.js'),
@@ -53,21 +54,20 @@ type Props = {
   note: Note
 }
 
-const options = {
+const getOptions = (theme: string) => ( {
   toolbarButtons: ['bold', 'italic', 'underline', 'alignRight', 'alignCenter', 'alignLeft', 'outdent', 'indent', 'undo', 'redo', 'clearFormatting', 'markdown', 'selectAll'],
   pluginsEnabled: ['align', 'charCounter', 'markdown'],
   charCounterMax: 5000,
   markDown: true,
-  theme: "gray"
-}
+  theme: theme
+})
 
 export const AddNote = (props: Props) => {
   const { data: session, status } = useSession()
   const router = useRouter()
   const searchParams = useSearchParams();  // To capture query params
-  const slug = searchParams.get('slug');
   const note = props.note;
-
+  const { theme } = useTheme()
   const form = useForm<FormType>({
     resolver: zodResolver(formSchema),
     mode: "onChange", //
@@ -77,14 +77,14 @@ export const AddNote = (props: Props) => {
       description: note?.description || '',
     },
   })
-  const { theme } = useTheme()
+
   const [isEditorReady, setEditorReady] = useState(false);
   const { handleSubmit, control, formState: { errors } } = form;
   const [imageFile, setImageFile] = useState<File | Blob | string | null>();
 
   useEffect(() => {
     setEditorReady(true)
-  }, [])
+  }, [theme])
 
 
 
@@ -194,7 +194,7 @@ export const AddNote = (props: Props) => {
   }
 
   return (
-    <div className=' relative flex flex-col w-screen h-screen  justify-center items-center  overflow-x-hidden bg-background ' >
+    <div className=' relative flex flex-col w-screen h-screen  justify-center items-center  overflow-x-hidden bg-background pb-16' >
       <Form {...form}>
         <form onSubmit={handleSubmit(savePost)} className=" w-full max-w-2xl px-2 mt-32 ">
           <FormField
@@ -240,9 +240,10 @@ export const AddNote = (props: Props) => {
                   <FormLabel>Content</FormLabel>
                   <div className='froala-wrapper'>
                     <FroalaEditorComponent
+                    key={theme}
                       model={field.value}
                       onModelChange={field.onChange}
-                      config={options}
+                      config={getOptions(theme || 'system')}
                     />
                   </div>
                   <FormDescription>

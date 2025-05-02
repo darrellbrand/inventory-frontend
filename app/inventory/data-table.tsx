@@ -17,6 +17,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import { useRouter } from "next/navigation"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -38,7 +39,7 @@ export function DataTable<TData, TValue>({
             sorting,
         },
     })
-
+    const router = useRouter()
     return (
         <div className="overflow-auto rounded-md border ">
             <Table>
@@ -66,10 +67,20 @@ export function DataTable<TData, TValue>({
                             <TableRow
                                 key={row.id}
                                 data-state={row.getIsSelected() && "selected"}
-                               
+                                className="cursor-pointer hover:bg-muted transition-colors"
+                                onClick={(e) => {
+                                    // Prevent navigating if clicking inside a button or dropdown
+                                    const isInteractive = (e.target as HTMLElement).closest("button, [role=menuitem]");
+                                    if (!isInteractive) {
+                                        const note = row.original as { id?: number }
+                                        if (note.id !== undefined) {
+                                            router.push(`/viewNote/${note.id}`)
+                                        }
+                                    }
+                                }}
                             >
                                 {row.getVisibleCells().map((cell) => (
-                                    <TableCell key={cell.id}  className="">
+                                    <TableCell key={cell.id} className="">
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                     </TableCell>
                                 ))}

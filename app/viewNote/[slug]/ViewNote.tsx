@@ -1,6 +1,6 @@
 
 
-import { Note, columns } from "../../inventory/columns"
+import { Note} from "../../inventory/columns"
 const viewNote = ({ params }: { params: { note: Note } }) => {
   const note = params.note
   return (
@@ -14,6 +14,8 @@ const viewNote = ({ params }: { params: { note: Note } }) => {
         <h1>{note.description}</h1>
         <h1>Email</h1>
         <h1>{note.email}</h1>
+        <h1>Image</h1>
+        <img src={note.imageUrl || undefined}></img>
       </div>
     </div>
 
