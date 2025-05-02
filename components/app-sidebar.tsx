@@ -1,5 +1,5 @@
 
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+import { Home, Inbox, Settings } from "lucide-react"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import {
     Sidebar,
@@ -11,7 +11,6 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import Navbar from "./Navbar"
 
 // Menu items.
 const items = [
@@ -35,7 +34,7 @@ const items = [
 export function AppSidebar() {
     return (
         <div className="fixed z-30">
-            <Sidebar collapsible="icon" className="">
+            <Sidebar collapsible="icon" className=""   >
                 <SidebarContent className="pt-5 ">
                     <SidebarGroup>
                         <SidebarGroupLabel>RTFM (Read This Fine Manual)</SidebarGroupLabel>

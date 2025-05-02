@@ -3,9 +3,9 @@ import React from 'react'
 import Chat from './chat'
 
 
-type Props = {}
 
-const page = (props: Props) => {
+
+const page = () => {
   return (
    <Chat></Chat>
   )

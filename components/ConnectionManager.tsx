@@ -1,8 +1,6 @@
 import React from 'react';
 import { socket } from '../socket';
 import { Unplug } from 'lucide-react';
-import { Cable } from 'lucide-react';
-import { boolean } from 'zod';
 type Props = {
   isConnected: boolean
 }

@@ -1,13 +1,11 @@
 'use client'
 import React from 'react'
-import Image from 'next/image';
 
-import { useSession } from "next-auth/react"
 import { UserNav } from './user-nav';
 import { ModeToggle } from './ModeToggle';
-type Props = {}
 
-const Navbar = (props: Props) => {
+
+const Navbar = () => {
 
   return (
    

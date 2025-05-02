@@ -37,7 +37,9 @@ export const FileUpload = ({
     if (newFiles.length > 0) {
       const firstFile = newFiles[0];
       setFiles([firstFile]); // overwrite
-      onChange && onChange([firstFile]); // send only one
+      if (onChange) {
+        onChange([firstFile]); // Call only if onChange exists
+      }
     }
   };
 
@@ -182,11 +184,10 @@ export function GridPattern() {
           return (
             <div
               key={`${col}-${row}`}
-              className={`w-10 h-10 flex shrink-0 rounded-[2px] ${
-                index % 2 === 0
+              className={`w-10 h-10 flex shrink-0 rounded-[2px] ${index % 2 === 0
                   ? "bg-gray-50 dark:bg-background"
                   : "bg-gray-50 dark:bg-slate-900 shadow-[0px_0px_1px_3px_rgba(255,255,255,1)_inset] dark:shadow-[0px_0px_1px_3px_rgba(0,0,0,1)_inset]"
-              }`}
+                }`}
             />
           );
         })

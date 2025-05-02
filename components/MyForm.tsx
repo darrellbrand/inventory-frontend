@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react"
 export function MyForm() {
   const [value, setValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { data: session, status } = useSession();
+  const { data: session} = useSession();
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     console.log(`${value}`)
     event.preventDefault();

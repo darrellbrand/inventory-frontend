@@ -1,17 +1,15 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { useForm, Controller, set } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { FormItem, FormControl, FormField, FormLabel, FormDescription, FormMessage, Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from "@hookform/resolvers/zod"
-import { string, z } from "zod"
+import { z } from "zod"
 import { Button } from "@/components/ui/button"
-import { useRouter, useSearchParams } from 'next/navigation'
-import { Textarea } from "@/components/ui/textarea"
+import { useRouter } from 'next/navigation'
 import { Note } from '../../inventory/columns';
 import { authenticator, getToken } from '@/app/actions/actions';
 import { FileUploader } from '@/components/FileUpload';
-import { getUploadAuthParams } from "@imagekit/next/server"
 import {
   ImageKitAbortError,
   ImageKitInvalidRequestError,
@@ -63,9 +61,8 @@ const getOptions = (theme: string) => ( {
 })
 
 export const AddNote = (props: Props) => {
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
   const router = useRouter()
-  const searchParams = useSearchParams();  // To capture query params
   const note = props.note;
   const { theme } = useTheme()
   const form = useForm<FormType>({
@@ -79,7 +76,7 @@ export const AddNote = (props: Props) => {
   })
 
   const [isEditorReady, setEditorReady] = useState(false);
-  const { handleSubmit, control, formState: { errors } } = form;
+  const { handleSubmit, control } = form;
   const [imageFile, setImageFile] = useState<File | Blob | string | null>();
 
   useEffect(() => {

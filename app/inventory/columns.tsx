@@ -1,5 +1,4 @@
 "use client"
-import { useRouter } from 'next/navigation'
 import { MoreHorizontal } from "lucide-react"
 import { ArrowUpDown } from "lucide-react"
 import { ColumnDef } from "@tanstack/react-table"
@@ -15,7 +14,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { revalidatePath } from 'next/cache'
+import Image from "next/image"
+
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -28,7 +28,7 @@ export type Note = {
   imageUrl: string
 }
 
-export const getColumns = (email: string): ColumnDef<Note>[] => [
+export const getColumns = (email: string, onClick: (id: string) => void): ColumnDef<Note>[] => [
   {
     accessorKey: "email",
     header: ({ column }) => {
@@ -113,7 +113,12 @@ export const getColumns = (email: string): ColumnDef<Note>[] => [
     accessorKey: "imageUrl",
     header: "Image",
     cell: ({ row }) => {
-      const image = row.getValue("imageUrl") || undefined;
+      const image = row.getValue("imageUrl");
+      const isValidImage =
+        typeof image === "string" &&
+        (image.startsWith("/") || image.startsWith("http://") || image.startsWith("https://"));
+
+      console.log(image)
       return (
         <div style={{
           whiteSpace: 'nowrap',
@@ -123,7 +128,13 @@ export const getColumns = (email: string): ColumnDef<Note>[] => [
 
         }} >
           {image as string}
-          <img src={image as string} alt="note image"></img>
+          {isValidImage ? (
+            <Image src={image} alt="" width={500}
+              height={300}
+              className="object-cover"></Image>
+          ) : (
+            <span className="text-xs text-muted-foreground">Invalid image</span>
+          )}
         </div>
       );
     }
@@ -132,7 +143,6 @@ export const getColumns = (email: string): ColumnDef<Note>[] => [
     id: "actions",
     cell: ({ row }) => {
       const note = row.original
-      const router = useRouter()
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -144,11 +154,11 @@ export const getColumns = (email: string): ColumnDef<Note>[] => [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => router.push('/viewNote/' + note.id)}>View note</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => router.push('/addNote/' + -1)}>Add note</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onClick('/viewNote/' + note.id)}>View note</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onClick('/addNote/' + -1)}>Add note</DropdownMenuItem>
             {note.email === email && (
               <>
-                <DropdownMenuItem onClick={() => router.push('/addNote/' + note.id)}>Edit note</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => onClick('/addNote/' + note.id)}>Edit note</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => {
                   if (note.id) {
                     console.log("deletePost")

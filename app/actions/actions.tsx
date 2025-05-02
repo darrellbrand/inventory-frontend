@@ -4,7 +4,7 @@ import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { jwtDecode } from "jwt-decode";
 import { Note } from '../inventory/columns';
-import { NextRequest, NextResponse } from 'next/server';
+import {  NextResponse } from 'next/server';
 
 export interface TokenResponse {
   token: string
@@ -133,7 +133,7 @@ export const getToken = async (): Promise<TokenResponse | null> => {
 }
 
 
-export const writeToken = async (req: NextRequest): Promise<NextResponse> => {
+export const writeToken = async (): Promise<NextResponse> => {
   const data = await getToken()
   const response = NextResponse.next();
   if (data) {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 type EventsProps = {
     events: { userName: string, text: string }[];
@@ -19,7 +19,7 @@ export function Events({ events, userList }: EventsProps) {
                         Array.from(
                             new Map(userList.map(user => [user.username, user])).values()
                         ).map((user, index) => (
-                            <div className='p-1 flex '>
+                            <div key={index} className='p-1 flex '>
                                 <li className=' whitespace-nowrap overflow-hidden text-ellipsis dark:text-slate-100 text-slate-800 w-full  max-w-full  ' key={index}>{user.username}</li>
                             </div>
                         ))
@@ -31,7 +31,7 @@ export function Events({ events, userList }: EventsProps) {
                     {
 
                         events.map((event, index) =>
-                            <div className=' m-1 p-2 flex '>
+                            <div key={index} className=' m-1 p-2 flex '>
                                 <li className='   dark:text-slate-100 text-slate-800 w-full  max-w-full break-words whitespace-pre-wrap ' key={index}><strong>{event.userName}</strong> ::  {event.text}</li>
                             </div>
                         )

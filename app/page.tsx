@@ -3,10 +3,7 @@ import React from 'react'
 
 import HomePage from './home'
 
-type Props = {}
-
-
-const page = async (props: Props) => {
+const page = async () => {
   return (
     <HomePage></HomePage>
   );

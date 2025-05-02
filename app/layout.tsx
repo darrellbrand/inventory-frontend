@@ -1,15 +1,15 @@
 
-import type { Metadata } from "next";
+
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import { SessionProvider } from "next-auth/react"
 import { ThemeProvider } from 'next-themes'
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 
 
 export const metadata = {
-  title: "Baller Webapp",
+  title: "RTFM",
   icons: {
     icon: "/favicon.ico", // or "/favicon.png" or any other icon file in public/
   },
