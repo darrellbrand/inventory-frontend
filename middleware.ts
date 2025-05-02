@@ -10,7 +10,7 @@ const password = 'password';
 const authString = btoa(`${username}:${password}`);
 export default auth((req) => {
   console.log("MIDDLEWARE")
-     return  writeToken(req)
+     return  writeToken()
   
 })
 export const config = {
