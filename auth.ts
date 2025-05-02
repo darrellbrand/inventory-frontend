@@ -5,7 +5,7 @@ import { redirect } from "next/dist/server/api-utils";
 const protectedRoutes = ['/inventory']
 const publicRoutes = ['/login', '/signup', '/']
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  
+  trustHost: true,
   providers: [Google],
   callbacks: {
     authorized: async ({ auth }) => {
