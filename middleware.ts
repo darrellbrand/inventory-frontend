@@ -14,7 +14,7 @@ export default auth((req) => {
     return NextResponse.next();
   } else {
     console.log("REDIRECT")
-    return NextResponse.redirect(new URL("/", req.url)); // ✅ This is correct
+    return NextResponse.redirect(new URL("/api/auth/signin", req.url)); // ✅ This is correct
 
 
   }

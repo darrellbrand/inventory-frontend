@@ -29,7 +29,7 @@ export const getPost = async (slug: string): Promise<Note | undefined> => {
     console.log('getPost')
     const tokenResponse = await getToken()
     if (tokenResponse) {
-      const response = await fetch(`http://localhost:8080/api/posts/getPost?id=${slug}`, {
+      const response = await fetch(`https://general-server-zwpu.onrender.com/api/posts/getPost?id=${slug}`, {
         method: 'GET',
         cache: "no-store",
         headers: {
@@ -51,7 +51,7 @@ export const getAllPosts = async () => {
   try {
     const data = await getToken()
     if (data) {
-      const postResponse = await fetch('http://localhost:8080/api/posts/findAll', {
+      const postResponse = await fetch('https://general-server-zwpu.onrender.com/api/posts/findAll', {
         cache: "no-store",
         method: 'GET',
         headers: {
@@ -79,7 +79,7 @@ export const deletePost = async (slug: string): Promise<void | undefined> => {
     console.log('deletePost')
     const tokenResponse = await getToken()
     if (tokenResponse) {
-      await fetch(`http://localhost:8080/api/posts/deletePost?id=${slug}`, {
+      await fetch(`https://general-server-zwpu.onrender.com/api/posts/deletePost?id=${slug}`, {
         method: 'POST',
         cache: "no-store",
         headers: {
@@ -109,7 +109,7 @@ export const getToken = async (): Promise<TokenResponse | null> => {
   console.log('No valid token found, requesting new one')
 
   try {
-    const response = await fetch('http://localhost:8080/token', {
+    const response = await fetch('https://general-server-zwpu.onrender.com/token', {
       method: 'POST',
       headers: {
         'Authorization': `Basic ${authString}`,
@@ -160,7 +160,7 @@ export const writeToken = async (): Promise<NextResponse> => {
 export const authenticator = async () => {
   try {
       // Perform the request to the upload authentication endpoint.
-      const response = await fetch('http://localhost:3000/api/upload-auth');
+      const response = await fetch('https://general-server-zwpu.onrender.com/api/upload-auth');
       if (!response.ok) {
           // If the server response is not successful, extract the error text for debugging.
           const errorText = await response.text();
