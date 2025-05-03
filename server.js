@@ -14,7 +14,6 @@ app.prepare().then(() => {
   const users = new Map(); // socketId => userData
   const io = new Server(httpServer, {
   });
-
   io.on("connection", (socket) => {
     console.log('Client connected');
     io.emit("users:list", Array.from(users.values()));
