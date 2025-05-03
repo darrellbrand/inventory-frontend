@@ -13,7 +13,12 @@ app.prepare().then(() => {
   const httpServer = createServer(handler);
   const users = new Map(); // socketId => userData
   const io = new Server(httpServer, {
+    cors: {
+      origin: "https://inventory-frontend-62sl.onrender.com",
+      methods: ["GET", "POST"],
+      credentials: true,
 
+    }
   });
 
   io.on("connection", (socket) => {
