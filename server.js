@@ -13,9 +13,7 @@ app.prepare().then(() => {
   const httpServer = createServer(handler);
   const users = new Map(); // socketId => userData
   const io = new Server(httpServer, {
-    cors: {
-      origin: "http://localhost:3000"
-    }
+
   });
 
   io.on("connection", (socket) => {
