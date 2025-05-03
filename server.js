@@ -13,6 +13,7 @@ app.prepare().then(() => {
   const httpServer = createServer(handler);
   const users = new Map(); // socketId => userData
   const io = new Server(httpServer, {
+    path: '/socket.io',
   });
   io.on("connection", (socket) => {
     console.log('Client connected');
@@ -31,7 +32,7 @@ app.prepare().then(() => {
       console.log(err.context);  // some additional error context
     });
 
-   
+
     socket.on("connect_error", (err) => {
       // the reason of the error, for example "xhr poll error"
       console.log(err.message);
