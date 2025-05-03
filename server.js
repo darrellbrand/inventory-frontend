@@ -31,6 +31,8 @@ app.prepare().then(() => {
       console.log(err.message);  // the error message, for example "Session ID unknown"
       console.log(err.context);  // some additional error context
     });
+
+   
     socket.on("connect_error", (err) => {
       // the reason of the error, for example "xhr poll error"
       console.log(err.message);
