@@ -15,8 +15,6 @@ export default auth((req) => {
   } else {
     console.log("REDIRECT")
     return NextResponse.redirect(new URL("/api/auth/signin", req.url)); // ✅ This is correct
-
-
   }
 })
 export const config = {
