@@ -1,11 +1,11 @@
 
-
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import { SessionProvider } from "next-auth/react"
 import { ThemeProvider } from 'next-themes'
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
+import Head from "next/head";
 
 
 export const metadata = {
@@ -24,6 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning >
       <body>
+        <Head>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
         <SessionProvider>
           <SidebarProvider>
             <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
