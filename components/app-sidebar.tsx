@@ -33,14 +33,16 @@ const items = [
 
 export function AppSidebar() {
     return (
-        <div className="fixed z-30">
+        <div className="fixed z-30 flex mt-28 ml-5 justify-center h-full">
+            <SidebarTrigger className="z-30 md:hidden bg-white dark:bg-slate-700"></SidebarTrigger>
             <Sidebar collapsible="icon" className=""   >
                 <SidebarContent className="pt-5 ">
+
                     <SidebarGroup>
                         <SidebarGroupLabel>RTFM (Read This Fine Manual)</SidebarGroupLabel>
                         <SidebarGroupContent>
                             <SidebarMenu>
-                            <SidebarTrigger className="z-30"></SidebarTrigger>
+                                <SidebarTrigger className="z-30"></SidebarTrigger>
                                 {items.map((item) => (
                                     <SidebarMenuItem key={item.title}>
                                         <SidebarMenuButton asChild>
