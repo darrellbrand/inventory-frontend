@@ -10,8 +10,9 @@ const app = next({ dev, hostname, port });
 const handler = app.getRequestHandler();
 
 app.prepare().then(() => {
+  const httpServer = createServer(handler); // ✅ Must be defined before using it
   const io = new Server(httpServer, {
-    path: "/socket.io",
+    path: "/socket.io", // ✅ Avoids Heroku 308 redirect issue
   });
   const users = new Map(); // socketId => userData
   
