@@ -24,9 +24,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning >
       <body>
-        <Head>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
         <SessionProvider>
           <SidebarProvider>
             <ThemeProvider attribute="class" defaultTheme="light" enableSystem>

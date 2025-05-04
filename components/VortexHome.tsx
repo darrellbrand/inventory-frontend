@@ -14,7 +14,7 @@ export function VortexDemo() {
           RTFM (Read This Fun Manual)
         </h2>
         <p className="text-white text-sm md:text-2xl max-w-xl mt-6 text-center">
-          Bug reports, tips, tricks, fixes, and real time chat.
+          Developer tips, fixes, and real time chat.
         </p>
         <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
         <a href='https://darrellbrand.github.io/profile-site-single/' target="_blank"
