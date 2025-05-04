@@ -1,5 +1,5 @@
 
-import { Home, StickyNote, MessageCircleCode, UserPen , FileUp} from "lucide-react"
+import { Home, StickyNote, MessageCircleCode, FileUp, Contact} from "lucide-react"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import {
     Sidebar,
@@ -37,7 +37,7 @@ const items = [
     {
         title: "about",
         url: "https://darrellbrand.github.io/profile-site-single/",
-        icon: UserPen,
+        icon: Contact,
     },
 ]
 
