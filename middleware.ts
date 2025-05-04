@@ -18,5 +18,5 @@ export default auth((req) => {
   }
 })
 export const config = {
-  matcher: ["/chat", "/inventory", "/viewNote", "/addNote"],
+  matcher: ["/chat", "/inventory", "/viewNote", "/addNote/:path*"],
 }
