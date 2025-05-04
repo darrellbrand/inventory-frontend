@@ -1,5 +1,5 @@
 
-import { Home, Inbox, Settings } from "lucide-react"
+import { Home, Inbox, MessageCircleCode  } from "lucide-react"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import {
     Sidebar,
@@ -27,7 +27,7 @@ const items = [
     {
         title: "chat",
         url: "/chat",
-        icon: Settings,
+        icon: MessageCircleCode,
     },
 ]
 
