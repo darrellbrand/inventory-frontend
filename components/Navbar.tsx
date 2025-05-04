@@ -16,7 +16,7 @@ const Navbar = () => {
         <a href='/'><p className='font-bold my-2'>Home</p></a>
         {/*  <a href='register'><p className='font-bold my-2'>register</p></a>
         <a href='login'><p className='font-bold my-2'>login</p></a> */}
-        <a href='/inventory'><p className='font-bold my-2'>About</p></a>
+        <a href='https://darrellbrand.github.io/profile-site-single/'><p className='font-bold my-2'>About</p></a>
         <ModeToggle></ModeToggle>
         <UserNav></UserNav>
       </nav>
