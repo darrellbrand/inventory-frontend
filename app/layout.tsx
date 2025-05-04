@@ -5,14 +5,14 @@ import { SessionProvider } from "next-auth/react"
 import { ThemeProvider } from 'next-themes'
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
-import Head from "next/head";
+import { Metadata } from "next";
 
 
-export const metadata = {
+
+export const metadata : Metadata = {
   title: "RTFM",
-  icons: {
-    icon: "/favicon.ico", // or "/favicon.png" or any other icon file in public/
-  },
+  description: "Software developer loungs",
+  
 };
 
 
