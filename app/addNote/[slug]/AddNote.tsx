@@ -193,7 +193,7 @@ export const AddNote = (props: Props) => {
   return (
     <div className=' relative flex flex-col w-screen h-screen  justify-center items-center  overflow-x-hidden bg-background pb-16' >
       <Form {...form}>
-        <form onSubmit={handleSubmit(savePost)} className=" w-full max-w-2xl px-2  mt-48 md:mt-32 ">
+        <form onSubmit={handleSubmit(savePost)} className=" w-full max-w-2xl px-2  mt-56 md:mt-32 ">
           <FormField
             control={form.control}
             name="title"
