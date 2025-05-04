@@ -1,5 +1,5 @@
 
-import { Home, StickyNote, MessageCircleCode, UserPen } from "lucide-react"
+import { Home, StickyNote, MessageCircleCode, UserPen , FileUp} from "lucide-react"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import {
     Sidebar,
@@ -23,6 +23,11 @@ const items = [
         title: "notes",
         url: "/inventory",
         icon: StickyNote,
+    },
+    {
+        title: "add note",
+        url: "/addnote/-1",
+        icon: FileUp,
     },
     {
         title: "chat",
