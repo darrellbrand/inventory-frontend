@@ -21,7 +21,7 @@ export default function Chat() {
   console.log("Session: ", session, "Status:", status);
   useEffect(() => {
 
-    if (status !== "authenticated") return;
+    
 
     function onConnect() {
       console.log(`client connect()`)

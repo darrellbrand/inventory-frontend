@@ -1,7 +1,8 @@
-import { createServer } from "node:http";
-import next from "next";
-import { Server } from "socket.io";
+
 process.env.DEBUG = 'socket.io:*';
+const { createServer } = require("http");
+const next = require("next");
+const { Server } = require("socket.io");
 const dev = process.env.NODE_ENV !== "production";
 const hostname = "0.0.0.0";
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -11,13 +12,9 @@ const handler = app.getRequestHandler();
 
 app.prepare().then(() => {
   const httpServer = createServer(handler); // ✅ Must be defined before using it
-  const io = new Server(httpServer, {
-    path: "/socket.io",
-    addTrailingSlash: false,
-    debug: true 
-  });
+  const io = new Server(httpServer);
   const users = new Map(); // socketId => userData
-  
+   console.log("app start")
 
   io.on("connection", (socket) => {
     console.log('Client connected');
