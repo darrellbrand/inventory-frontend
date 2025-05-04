@@ -1,5 +1,5 @@
 
-import { Home, StickyNote, MessageCircleCode, Mail  } from "lucide-react"
+import { Home, StickyNote, MessageCircleCode, Mail } from "lucide-react"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import {
     Sidebar,
@@ -30,7 +30,7 @@ const items = [
         icon: MessageCircleCode,
     },
     {
-        title: "chat",
+        title: "about",
         url: "https://darrellbrand.github.io/profile-site-single/",
         icon: Mail,
     },
@@ -49,10 +49,21 @@ export function AppSidebar() {
                                 {items.map((item) => (
                                     <SidebarMenuItem key={item.title}>
                                         <SidebarMenuButton asChild>
-                                            <a href={item.url}>
-                                                <item.icon />
-                                                <span>{item.title}</span>
-                                            </a>
+                                            {item.url.startsWith("http") ? (
+                                                <a
+                                                    href={item.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    <item.icon />
+                                                    <span>{item.title}</span>
+                                                </a>
+                                            ) : (
+                                                <a href={item.url}>
+                                                    <item.icon />
+                                                    <span>{item.title}</span>
+                                                </a>
+                                            )}
                                         </SidebarMenuButton>
                                     </SidebarMenuItem>
                                 ))}
