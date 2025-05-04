@@ -16,9 +16,12 @@ app.prepare().then(() => {
   io.on("connection", (socket) => {
     console.log('Client connected');
     io.emit("users:list", Array.from(users.values()));
-    socket.on('message', (data) => {
+    socket.on('message', (data, callback) => {
       console.log('Message received:', data);
       console.log(`[${data.username}]: ${data.text}`);
+      if (callback) {
+        callback(null, 'received'); // first arg is "error", second is "response"
+      }
       // Optionally, emit a response
       io.emit('message', data);
     });
