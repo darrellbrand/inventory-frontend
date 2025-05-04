@@ -33,8 +33,8 @@ const items = [
 
 export function AppSidebar() {
     return (
-        <div className="fixed z-30 flex mt-28 ml-5 justify-center h-full">
-            <SidebarTrigger className="z-30 md:hidden bg-white dark:bg-slate-700"></SidebarTrigger>
+        <div className="fixed z-30 flex  justify-center h-full">
+            <SidebarTrigger className="z-30 md:hidden mx-2 mt-8 bg-slate-400 dark:bg-slate-700"></SidebarTrigger>
             <Sidebar collapsible="icon" className=""   >
                 <SidebarContent className="pt-5 ">
 
