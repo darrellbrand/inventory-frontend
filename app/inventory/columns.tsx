@@ -130,7 +130,7 @@ export const getColumns = (email: string, onClick: (id: string) => void): Column
           {image as string}
           {isValidImage ? (
             <Image src={image} alt="" width={500}
-              height={300}
+              height={150}
               className="object-cover"></Image>
           ) : (
             <span className="text-xs text-muted-foreground">Invalid image</span>
