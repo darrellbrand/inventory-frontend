@@ -95,15 +95,16 @@ export const getColumns = (email: string, onClick: (id: string) => void): Column
     accessorKey: "content",
     header: "Content",
     cell: ({ row }) => {
-      const content = row.getValue("content");
+      const content = row.getValue("content") as string;
       return (
         <div style={{
           whiteSpace: 'nowrap',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           maxWidth: '150px' // Adjust the width as needed
-        }}>
-          {content as string}
+        }}
+          dangerouslySetInnerHTML={{ __html: content }}
+        >
         </div>
       );
     }
