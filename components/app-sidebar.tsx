@@ -1,5 +1,5 @@
 
-import { Home, Inbox, MessageCircleCode  } from "lucide-react"
+import { Home, StickyNote, MessageCircleCode  } from "lucide-react"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import {
     Sidebar,
@@ -22,7 +22,7 @@ const items = [
     {
         title: "notes",
         url: "/inventory",
-        icon: Inbox,
+        icon: StickyNote,
     },
     {
         title: "chat",
