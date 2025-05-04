@@ -12,7 +12,7 @@ const ViewNote = ({ params }: { params: { note: Note } }) => {
         <h1>Title</h1>
         <h1>{note.title}</h1>
         <h1>Content</h1>
-        <h1>{note.content}</h1>
+        <h1 dangerouslySetInnerHTML={{__html : note.content}}></h1>
         <h1>Description</h1>
         <h1>{note.description}</h1>
         <h1>Email</h1>
