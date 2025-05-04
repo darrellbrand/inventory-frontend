@@ -1,5 +1,5 @@
 
-import { Home, StickyNote, MessageCircleCode  } from "lucide-react"
+import { Home, StickyNote, MessageCircleCode, Mail  } from "lucide-react"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import {
     Sidebar,
@@ -28,6 +28,11 @@ const items = [
         title: "chat",
         url: "/chat",
         icon: MessageCircleCode,
+    },
+    {
+        title: "chat",
+        url: "https://darrellbrand.github.io/profile-site-single/",
+        icon: Mail,
     },
 ]
 
