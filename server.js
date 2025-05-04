@@ -1,7 +1,7 @@
 import { createServer } from "node:http";
 import next from "next";
 import { Server } from "socket.io";
-
+process.env.DEBUG = 'socket.io:*';
 const dev = process.env.NODE_ENV !== "production";
 const hostname = "0.0.0.0";
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -13,7 +13,8 @@ app.prepare().then(() => {
   const httpServer = createServer(handler); // ✅ Must be defined before using it
   const io = new Server(httpServer, {
     path: "/socket.io",
-    addTrailingSlash: false // ✅ Avoids Heroku 308 redirect issue
+    addTrailingSlash: false,
+    debug: true 
   });
   const users = new Map(); // socketId => userData
   
