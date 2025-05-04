@@ -235,7 +235,7 @@ export const AddNote = (props: Props) => {
               render={({ field }) => (
                 <FormItem className='mt-5'>
                   <FormLabel>Content</FormLabel>
-                  <div className='froala-wrapper'>
+                  <div className='froala-wrapper h-64 overflow-y-auto'>
                     <FroalaEditorComponent
                     key={theme}
                       model={field.value}

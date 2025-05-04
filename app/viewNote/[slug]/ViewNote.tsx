@@ -17,7 +17,6 @@ const ViewNote = ({ params }: { params: { note: Note } }) => {
         <h1>{note.description}</h1>
         <h1>Email</h1>
         <h1>{note.email}</h1>
-
         {isValidImage ? (
           <>
             <h1>Image</h1>
