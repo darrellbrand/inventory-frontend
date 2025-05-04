@@ -47,7 +47,7 @@ export function AppSidebar() {
             <Sidebar collapsible="icon" className=""   >
                 <SidebarContent className="pt-5 ">
                     <SidebarGroup>
-                        <SidebarGroupLabel>RTFM (Read This Fine Manual)</SidebarGroupLabel>
+                        <SidebarGroupLabel>RTFM (Read This Fun Manual)</SidebarGroupLabel>
                         <SidebarGroupContent>
                             <SidebarMenu>
                                 <SidebarTrigger className="z-30"></SidebarTrigger>
