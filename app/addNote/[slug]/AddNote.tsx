@@ -171,7 +171,7 @@ export const AddNote = (props: Props) => {
       }
       const tokenResponse = await getToken()
       if (tokenResponse) {
-        const response = await fetch('https://general-server-zwpu.onrender.com/api/posts/save', {
+        const response = await fetch('https://general-server-55519fee6cbd.herokuapp.com/api/posts/save', {
           method: 'POST',
           cache: "no-store",
           body: JSON.stringify(note),
