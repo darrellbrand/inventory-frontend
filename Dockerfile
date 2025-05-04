@@ -45,6 +45,7 @@ COPY --from=builder /app/.next/static ./.next/static
 # Copy node_modules from builder stage
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/server.js ./server.js
+COPY --from=builder /app/next.config.mjs ./
 USER nextjs
 
 EXPOSE 3000

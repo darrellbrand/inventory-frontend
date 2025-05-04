@@ -6,6 +6,7 @@ const ViewNote = ({ params }: { params: { note: Note } }) => {
   const isValidImage =
     typeof note.imageUrl === "string" &&
     (note.imageUrl.startsWith("/") || note.imageUrl.startsWith("http://") || note.imageUrl.startsWith("https://"));
+    console.log(note.imageUrl)
   return (
     <div className="w-screen h-screen flex flex-col items-center  justify-center bg-background  ">
       <div className="w-full grid gap-4 grid-cols-2  max-w-5xl mx-auto">

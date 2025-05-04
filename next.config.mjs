@@ -1,8 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     output: "standalone",
-    images: {
-        domains: ['ik.imagekit.io'],
+    images: { remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'ik.imagekit.io',
+          pathname: '/**',
+        },
+      ],
     },
 };
 
