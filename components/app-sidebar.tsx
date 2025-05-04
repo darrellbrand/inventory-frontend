@@ -26,7 +26,7 @@ const items = [
     },
     {
         title: "add note",
-        url: "/addnote/-1",
+        url: "/addNote/-1",
         icon: FileUp,
     },
     {
